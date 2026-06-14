@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  /* Visible keyboard focus on every interactive element (acceptance criteria). */
+  :focus-visible {
+    outline: 2px solid #1F6B4A;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Default hero banner — branded animated decoration (used when no media set). */
+@keyframes gsa-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes gsa-drift {
+  0% { transform: translateX(0) translateY(0); opacity: 0.25; }
+  50% { opacity: 0.5; }
+  100% { transform: translateX(40px) translateY(-20px); opacity: 0.25; }
+}
+@keyframes gsa-sheen {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.gsa-float { animation: gsa-float 6s ease-in-out infinite; }
+.gsa-drift { animation: gsa-drift 12s ease-in-out infinite alternate; }
+.gsa-sheen {
+  background-size: 200% 200%;
+  animation: gsa-sheen 14s linear infinite alternate;
+}
+
+/* Respect prefers-reduced-motion (acceptance criteria). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
