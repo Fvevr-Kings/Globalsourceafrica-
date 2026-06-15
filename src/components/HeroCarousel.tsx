@@ -26,14 +26,18 @@ export function HeroCarousel({ banners }: { banners: Banner[] }) {
   }, [banners.length]);
 
   const current = banners[i];
+  const hasText = !!(current.headline || current.subtitle);
 
   return (
     <section className="relative isolate w-full overflow-hidden rounded-3xl border border-greenLine bg-green text-white">
       <div className={`relative ${HEIGHT}`}>
         <Slide banner={current} />
 
-        {/* green scrim for legibility over any media */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-green/90 via-green/50 to-green/5" />
+        {/* Legibility scrim ONLY when there's overlay text. With no text the
+            uploaded media shows clean at full colour (no green tint). */}
+        {hasText && (
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-green/85 via-green/40 to-transparent" />
+        )}
 
         {(current.headline || current.subtitle) && (
           <div className="pointer-events-none relative flex h-full max-w-2xl flex-col justify-center gap-1.5 px-6 sm:px-10">
