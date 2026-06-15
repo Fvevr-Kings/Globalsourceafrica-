@@ -90,6 +90,14 @@ export default async function ProductPage({
 
           <AddToCartPanel product={product} />
 
+          {/* Bulk / B2B path — secondary (not an orange action button). */}
+          <Link
+            href={`/request-quote?product=${product.slug}`}
+            className="inline-flex w-full items-center justify-center rounded-full border border-greenLine bg-white px-5 py-3 font-medium text-ink hover:border-green"
+          >
+            Buying in volume? Request a quote
+          </Link>
+
           {/* Trust note — sold by the business; supplier never shown. */}
           <div className="flex items-start gap-2 rounded-xl bg-greenSoft p-4 text-sm text-green">
             <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" aria-hidden />

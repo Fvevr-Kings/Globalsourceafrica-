@@ -18,8 +18,8 @@ const config: Config = {
         cream: "#FBFAF7", // page canvas
       },
       fontFamily: {
-        // Fraunces (display) + Inter (body/UI), loaded via next/font in layout.
-        display: ["var(--font-fraunces)", "Georgia", "serif"],
+        // Outfit (clean modern display) + Inter (body/UI), via next/font in layout.
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       borderColor: {

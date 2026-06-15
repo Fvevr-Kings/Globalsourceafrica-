@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   Store,
   Image as ImageIcon,
+  FileText,
   LogOut,
   ExternalLink,
 } from "lucide-react";
@@ -18,6 +19,7 @@ const links = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/orders", label: "Orders", icon: ShoppingBag },
+  { href: "/admin/quotes", label: "Quotes", icon: FileText },
   { href: "/admin/merchants", label: "Merchants", icon: Store },
   { href: "/admin/banners", label: "Billboard", icon: ImageIcon },
 ];

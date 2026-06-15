@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { HeaderMenu } from "./HeaderMenu";
 
 export function Header() {
   const { count } = useCart();
@@ -18,12 +19,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-30 border-b border-greenLine bg-cream/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        {/* spacer to keep the name visually centered against the cart */}
-        <div className="w-10" aria-hidden />
+        {/* Top-left menu: quote, supplier portal, admin. */}
+        <HeaderMenu />
 
         <Link
           href="/"
-          className="text-center font-display text-xl font-semibold text-green sm:text-2xl"
+          className="text-center font-display text-xl font-bold tracking-tight text-green sm:text-2xl"
         >
           Global-Source Africa
         </Link>

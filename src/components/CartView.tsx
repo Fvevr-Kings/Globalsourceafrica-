@@ -129,6 +129,12 @@ export function CartView() {
         <p className="mt-3 text-center text-xs text-sub">
           No account needed to get here — identity is only asked at checkout.
         </p>
+        <Link
+          href="/request-quote"
+          className="mt-3 block text-center text-sm font-medium text-green hover:underline"
+        >
+          Buying in volume? Request a quote
+        </Link>
       </aside>
     </div>
   );

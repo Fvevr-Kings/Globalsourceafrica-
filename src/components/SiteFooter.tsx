@@ -15,7 +15,10 @@ export function SiteFooter() {
           Sold and backed by Global-Source Africa. Every order is fulfilled by
           us — you pay the business, never a stranger.
         </p>
-        <span className="flex gap-4">
+        <span className="flex flex-wrap gap-4">
+          <a href="/request-quote" className="font-medium text-green hover:underline">
+            Request a quote
+          </a>
           <a href="/become-a-supplier" className="font-medium text-green hover:underline">
             Become a supplier →
           </a>

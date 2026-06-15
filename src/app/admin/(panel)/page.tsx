@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { Package, ShoppingBag, Store, Clock } from "lucide-react";
-import { getDashboardCounts } from "@/lib/admin/data";
+import { Package, ShoppingBag, Store, Clock, FileText } from "lucide-react";
+import { getDashboardCounts, getNewQuoteCount } from "@/lib/admin/data";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const c = await getDashboardCounts();
+  const [c, newQuotes] = await Promise.all([
+    getDashboardCounts(),
+    getNewQuoteCount(),
+  ]);
   const statuses = ["placed", "confirmed", "shipped", "delivered", "refunded"];
 
   return (
@@ -13,9 +16,16 @@ export default async function AdminDashboard() {
       <h1 className="font-display text-2xl font-semibold text-ink">Dashboard</h1>
       <p className="mt-1 text-sm text-sub">Overview of the marketplace.</p>
 
-      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-3">
         <Stat label="Products" value={c.products} icon={<Package className="h-5 w-5" />} href="/admin/products" />
         <Stat label="Orders" value={c.orders} icon={<ShoppingBag className="h-5 w-5" />} href="/admin/orders" />
+        <Stat
+          label="New quote requests"
+          value={newQuotes}
+          icon={<FileText className="h-5 w-5" />}
+          href="/admin/quotes"
+          highlight={newQuotes > 0}
+        />
         <Stat
           label="Products to review"
           value={c.pendingProducts}
@@ -29,6 +39,13 @@ export default async function AdminDashboard() {
           icon={<Store className="h-5 w-5" />}
           href="/admin/merchants"
           highlight={c.pendingApplications > 0}
+        />
+        <Stat
+          label="Out of stock"
+          value={c.outOfStock}
+          icon={<Clock className="h-5 w-5" />}
+          href="/admin/products"
+          highlight={c.outOfStock > 0}
         />
       </div>
 

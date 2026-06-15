@@ -142,6 +142,41 @@ export async function listBanners() {
   return data ?? [];
 }
 
+export async function listQuotes() {
+  const db = createSupabaseAdminClient();
+  const { data, error } = await db
+    .from("quote_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function getQuote(id: string) {
+  const db = createSupabaseAdminClient();
+  const { data, error } = await db
+    .from("quote_requests")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
+// Resilient so the dashboard never 500s if migration 0005 isn't applied yet.
+export async function getNewQuoteCount(): Promise<number> {
+  try {
+    const db = createSupabaseAdminClient();
+    const { count } = await db
+      .from("quote_requests")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "new");
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
 export async function getDashboardCounts() {
   const db = createSupabaseAdminClient();
   const [products, outOfStock, orders, pendingApps, suppliers, pendingProducts] =

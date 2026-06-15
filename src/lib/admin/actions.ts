@@ -231,6 +231,33 @@ export async function rejectApplication(id: string): Promise<ActionResult> {
   }
 }
 
+// ---- Quote requests --------------------------------------------------------
+
+const QUOTE_STATUSES = ["new", "reviewing", "quoted", "closed"];
+
+export async function updateQuoteStatus(
+  id: string,
+  status: string
+): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    if (!QUOTE_STATUSES.includes(status)) {
+      return { ok: false, error: "Invalid status" };
+    }
+    const db = createSupabaseAdminClient();
+    const { error } = await db
+      .from("quote_requests")
+      .update({ status })
+      .eq("id", id);
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/quotes");
+    revalidatePath(`/admin/quotes/${id}`);
+    return { ok: true, id };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to update quote" };
+  }
+}
+
 // ---- Merchant product approval ---------------------------------------------
 
 export async function approveProduct(id: string): Promise<ActionResult> {

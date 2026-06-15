@@ -29,7 +29,7 @@ cp .env.example .env.local
 #    Option A — Supabase CLI against your project:
 supabase db push        # applies everything in supabase/migrations/
 #    Option B — paste each file in supabase/migrations/ into the SQL editor, in
-#    order: 0001_init, 0002_admin, 0003_banners, 0004_merchant_portal.
+#    order: 0001_init, 0002_admin, 0003_banners, 0004_merchant_portal, 0005_quotes.
 
 # 4. Seed ~8 products / 3 suppliers / bulk tiers
 npm run seed
@@ -86,6 +86,17 @@ Admin → Products → "Awaiting approval". Needs migration `0004_merchant_porta
   `/merchant` → submit products → admin approves → product goes live.
 - Every merchant action re-verifies the supplier and is scoped to their own
   `supplier_id` (a merchant can never see or edit another supplier's data).
+
+## Quote / sourcing requests
+
+Buyers can request a **bulk quote on a listed product** or ask us to **source a
+product** not yet listed, with their contact details — at `/request-quote`
+(also launched pre-filled from each product page, and linked in the header menu,
+footer, and cart). Submissions land in **Admin → Quotes** with a status workflow
+(`new → reviewing → quoted → closed`). Needs migration `0005_quotes.sql`.
+
+The header has a **top-left dropdown menu** linking to Request a quote, Become a
+supplier, Supplier login, and Admin.
 
 ### Dev bypass (no email needed)
 

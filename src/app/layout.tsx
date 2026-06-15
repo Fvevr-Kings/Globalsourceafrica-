@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/SiteFooter";
 
-const fraunces = Fraunces({
+// Clean, modern display font for the brand wordmark + headings.
+const display = Outfit({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable}`}>
       <body>
         <CartProvider>
           <Header />

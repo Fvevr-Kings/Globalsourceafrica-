@@ -16,10 +16,8 @@ function isVideo(url: string) {
 
 export async function HeroBanner({
   title = "African farm products, sourced and verified.",
-  subtitle = "Grains, pulses, nuts, dried spices, cocoa, coffee and shea — bought with confidence, shipped worldwide.",
 }: {
   title?: string;
-  subtitle?: string;
 }) {
   const banners = await getActiveBanners();
 
@@ -58,11 +56,10 @@ export async function HeroBanner({
 
         <div className="absolute inset-0 bg-gradient-to-r from-green/90 via-green/55 to-green/10" />
 
-        <div className="relative flex h-full max-w-2xl flex-col justify-center gap-1.5 px-6 sm:px-10">
-          <h1 className="font-display text-xl font-semibold leading-tight drop-shadow sm:text-2xl lg:text-3xl">
+        <div className="relative flex h-full max-w-2xl flex-col justify-center px-6 sm:px-10">
+          <h1 className="font-display text-xl font-semibold leading-tight tracking-tight drop-shadow sm:text-2xl lg:text-3xl">
             {title}
           </h1>
-          <p className="max-w-xl text-xs text-white/90 sm:text-sm">{subtitle}</p>
         </div>
       </div>
     </section>
