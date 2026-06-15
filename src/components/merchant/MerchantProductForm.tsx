@@ -118,7 +118,7 @@ export function MerchantProductForm({ initial }: { initial?: Initial }) {
       </Section>
 
       <Section title="Images">
-        <MediaUploader label="Product images" folder="products" value={imageUrls} onChange={setImageUrls} endpoint="/merchant/api/upload" />
+        <MediaUploader label="Product images" folder="products" value={imageUrls} onChange={setImageUrls} endpoint="/merchant/api/upload-url" />
       </Section>
 
       <Section title="Provenance">
@@ -134,7 +134,7 @@ export function MerchantProductForm({ initial }: { initial?: Initial }) {
           <Text label="Quality report URL" value={f.quality_report_url} onChange={(v) => set("quality_report_url", v)} />
         </div>
         <div className="mt-4">
-          <MediaUploader label="Batch photos" folder="batches" value={batchPhotos} onChange={setBatchPhotos} endpoint="/merchant/api/upload" />
+          <MediaUploader label="Batch photos" folder="batches" value={batchPhotos} onChange={setBatchPhotos} endpoint="/merchant/api/upload-url" />
         </div>
       </Section>
 

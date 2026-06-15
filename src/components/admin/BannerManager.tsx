@@ -9,6 +9,7 @@ import {
   deleteBanner,
   type BannerInput,
 } from "@/lib/admin/actions";
+import { uploadFileDirect } from "@/lib/upload-client";
 
 type Banner = BannerInput & { id: string; created_at?: string };
 
@@ -37,16 +38,12 @@ export function BannerManager({ banners }: { banners: Banner[] }) {
   async function upload(file: File) {
     setError(null);
     setUploading(true);
-    const fd = new FormData();
-    fd.append("file", file);
-    fd.append("folder", "banners");
     try {
-      const res = await fetch("/admin/api/upload", { method: "POST", body: fd });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Upload failed");
+      // Direct-to-Storage so large GIFs/videos bypass Vercel's request limit.
+      const url = await uploadFileDirect(file, "banners", "/admin/api/upload-url");
       setForm((p) => ({
         ...p,
-        media_url: data.url,
+        media_url: url,
         media_type: file.type.startsWith("video") ? "video" : "image",
       }));
     } catch (e: any) {

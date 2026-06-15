@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Upload, X } from "lucide-react";
+import { uploadFileDirect } from "@/lib/upload-client";
 
 // Uploads files to the staff-gated /admin/api/upload route and tracks the
 // resulting public URLs. Used for product images and batch photos.
@@ -12,7 +13,7 @@ export function MediaUploader({
   value,
   onChange,
   max = 8,
-  endpoint = "/admin/api/upload",
+  endpoint = "/admin/api/upload-url",
 }: {
   label: string;
   folder: string;
@@ -30,16 +31,11 @@ export function MediaUploader({
     setBusy(true);
     const uploaded: string[] = [];
     for (const file of Array.from(files).slice(0, max - value.length)) {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("folder", folder);
       try {
-        const res = await fetch(endpoint, { method: "POST", body: fd });
-        const data = await res.json();
-        if (res.ok && data.url) uploaded.push(data.url);
-        else setError(data.error ?? "Upload failed");
-      } catch {
-        setError("Upload failed");
+        const url = await uploadFileDirect(file, folder, endpoint);
+        uploaded.push(url);
+      } catch (e: any) {
+        setError(e.message ?? "Upload failed");
       }
     }
     setBusy(false);
