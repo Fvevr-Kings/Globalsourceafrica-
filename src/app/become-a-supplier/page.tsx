@@ -4,9 +4,9 @@ import { ChevronLeft } from "lucide-react";
 import { SupplierApplicationForm } from "@/components/SupplierApplicationForm";
 
 export const metadata: Metadata = {
-  title: "Become a supplier — Global-Source Africa",
+  title: "Become a supplier — GlobalSource Africa",
   description:
-    "Apply to supply non-perishable African farm products through Global-Source Africa.",
+    "Apply to supply non-perishable African farm products through GlobalSource Africa.",
 };
 
 export default function BecomeSupplierPage() {
@@ -24,7 +24,7 @@ export default function BecomeSupplierPage() {
       <p className="mt-2 max-w-2xl text-sub">
         We partner with verified farms and cooperatives across Africa. Tell us
         about your business — once approved, you supply through the
-        Global-Source Africa brand while we handle the global buyer relationship.
+        GlobalSource Africa brand while we handle the global buyer relationship.
       </p>
       <div className="mt-6">
         <SupplierApplicationForm />

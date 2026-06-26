@@ -6,7 +6,7 @@ import { localized } from "@/lib/i18n";
 import { QuoteRequestForm } from "@/components/QuoteRequestForm";
 
 export const metadata: Metadata = {
-  title: "Request a quote — Global-Source Africa",
+  title: "Request a quote — GlobalSource Africa",
   description:
     "Request a bulk quote on a listed product, or ask us to source a non-perishable African farm product for you.",
 };
@@ -35,7 +35,7 @@ export default async function RequestQuotePage({
       <p className="mt-2 max-w-2xl text-sub">
         Buying in volume, or looking for something we don’t list yet? Tell us
         what you need and we’ll come back with a quote — sold and backed by
-        Global-Source Africa.
+        GlobalSource Africa.
       </p>
       <div className="mt-6">
         <QuoteRequestForm

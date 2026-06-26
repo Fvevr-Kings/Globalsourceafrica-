@@ -102,7 +102,7 @@ export default async function ProductPage({
           <div className="flex items-start gap-2 rounded-xl bg-greenSoft p-4 text-sm text-green">
             <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" aria-hidden />
             <p>
-              Sold and backed by Global-Source Africa. You buy from the business —
+              Sold and backed by GlobalSource Africa. You buy from the business —
               one accountable seller stands behind every order.
             </p>
           </div>

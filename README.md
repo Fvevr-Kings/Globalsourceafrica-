@@ -1,4 +1,4 @@
-# Global-Source Africa — Phase 1
+# GlobalSource Africa — Phase 1
 
 A product-first storefront for non-perishable African farm products (grains,
 pulses, nuts, dried spices, cocoa, coffee, shea). The platform is the **merchant

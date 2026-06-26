@@ -30,7 +30,7 @@ export function WhyUsToggle() {
           <Point
             icon={<Wallet className="h-5 w-5 text-green" />}
             title="You pay us, not strangers"
-            body="Global-Source Africa is the merchant of record. One business stands behind every order."
+            body="GlobalSource Africa is the merchant of record. One business stands behind every order."
           />
           <Point
             icon={<Clock className="h-5 w-5 text-green" />}

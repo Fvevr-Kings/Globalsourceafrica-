@@ -26,7 +26,7 @@ export function Header() {
           href="/"
           className="text-center font-display text-xl font-bold tracking-tight text-green sm:text-2xl"
         >
-          Global-Source Africa
+          GlobalSource Africa
         </Link>
 
         <Link

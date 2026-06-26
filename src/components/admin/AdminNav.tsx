@@ -45,7 +45,7 @@ export function AdminNav({
     <aside className="w-full shrink-0 lg:w-60">
       <div className="rounded-2xl border border-greenLine bg-white p-4">
         <Link href="/admin" className="font-display text-lg font-semibold text-green">
-          Global-Source
+          GlobalSource
         </Link>
         <p className="text-xs text-sub">Admin</p>
 

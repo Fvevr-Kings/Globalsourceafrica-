@@ -85,7 +85,7 @@ export function MerchantProductForm({ initial }: { initial?: Initial }) {
   return (
     <form onSubmit={submit} className="space-y-6">
       <p className="rounded-xl bg-greenSoft px-4 py-3 text-sm text-green">
-        Submitting sends this product to Global-Source Africa for review. It goes
+        Submitting sends this product to GlobalSource Africa for review. It goes
         live on the storefront only after an admin approves it.
       </p>
 

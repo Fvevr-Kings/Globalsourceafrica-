@@ -12,7 +12,7 @@ export default function MerchantLoginPage({
       <div className="w-full max-w-sm">
         <div className="mb-6 text-center">
           <span className="font-display text-2xl font-semibold text-green">
-            Global-Source Africa
+            GlobalSource Africa
           </span>
           <p className="text-sm text-sub">Supplier portal</p>
         </div>

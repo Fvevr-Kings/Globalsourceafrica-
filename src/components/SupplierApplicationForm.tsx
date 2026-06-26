@@ -53,7 +53,7 @@ export function SupplierApplicationForm() {
         </h2>
         <p className="mt-2 text-sub">
           Thank you. Our team will review your details and reach out. Approved
-          suppliers are onboarded behind the Global-Source Africa brand.
+          suppliers are onboarded behind the GlobalSource Africa brand.
         </p>
       </div>
     );

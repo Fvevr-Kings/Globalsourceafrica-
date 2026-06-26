@@ -119,7 +119,7 @@ export default async function OrderPage({
 
       <div className="mt-4 flex items-start gap-2 rounded-xl bg-greenSoft p-4 text-sm text-green">
         <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" aria-hidden />
-        <p>Sold and backed by Global-Source Africa.</p>
+        <p>Sold and backed by GlobalSource Africa.</p>
       </div>
 
       <Link

@@ -16,7 +16,7 @@ export default async function MerchantDashboard() {
       </h1>
       <p className="mt-1 text-sm text-sub">
         Submit products for review. Approved items go live on the storefront —
-        sold under the Global-Source Africa brand.
+        sold under the GlobalSource Africa brand.
       </p>
 
       <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">

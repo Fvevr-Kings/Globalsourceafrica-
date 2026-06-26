@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 // Clean, modern display font for the brand wordmark + headings.
 const display = Outfit({
@@ -19,9 +20,29 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Global-Source Africa — non-perishable African farm products",
+  title: "GlobalSource Africa — non-perishable African farm products",
   description:
-    "Grains, pulses, nuts, dried spices, cocoa, coffee and shea from verified African origins. Sold and backed by Global-Source Africa.",
+    "Grains, pulses, nuts, dried spices, cocoa, coffee and shea from verified African origins. Sold and backed by GlobalSource Africa.",
+  manifest: "/manifest.webmanifest",
+  applicationName: "GlobalSource Africa",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "GlobalSource",
+  },
+  icons: {
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1F6B4A",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -37,6 +58,7 @@ export default function RootLayout({
           <main>{children}</main>
           <SiteFooter />
         </CartProvider>
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

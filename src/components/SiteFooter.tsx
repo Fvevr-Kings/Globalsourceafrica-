@@ -12,7 +12,7 @@ export function SiteFooter() {
     <footer className="mt-16 border-t border-greenLine bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-sub sm:flex-row sm:items-center sm:justify-between">
         <p>
-          Sold and backed by Global-Source Africa. Every order is fulfilled by
+          Sold and backed by GlobalSource Africa. Every order is fulfilled by
           us — you pay the business, never a stranger.
         </p>
         <span className="flex flex-wrap gap-4">
