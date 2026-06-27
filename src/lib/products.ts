@@ -19,9 +19,21 @@ export function isDemoMode(): boolean {
 const PRODUCT_COLUMNS =
   "id, slug, name, category, origin_country, origin_flag, blurb, description, base_unit, retail_price_usd, image_urls, in_stock, origin_region, harvest_date, moisture_pct, grade, certifications, quality_report_url, batch_photo_urls, name_i18n, blurb_i18n, description_i18n, created_at";
 
-export async function getAllProducts(): Promise<Product[]> {
-  if (isDemoMode()) return demoProducts;
+// `section` splits the catalog into 'farm' (main store, default) and 'raw'
+// (raw materials). Omit it to get everything.
+export async function getAllProducts(section?: string): Promise<Product[]> {
+  if (isDemoMode()) return section && section !== "farm" ? [] : demoProducts;
   const db = createSupabaseServerClient();
+  if (section) {
+    const { data, error } = await db
+      .from("public_products")
+      .select(PRODUCT_COLUMNS)
+      .eq("section", section)
+      .order("created_at", { ascending: false });
+    // If `section` doesn't exist yet (migration 0008 not applied), fall through
+    // to the unfiltered query so the storefront never breaks.
+    if (!error) return (data ?? []) as Product[];
+  }
   const { data, error } = await db
     .from("public_products")
     .select(PRODUCT_COLUMNS)
@@ -30,8 +42,8 @@ export async function getAllProducts(): Promise<Product[]> {
   return (data ?? []) as Product[];
 }
 
-export async function getCategories(): Promise<string[]> {
-  const products = await getAllProducts();
+export async function getCategories(section?: string): Promise<string[]> {
+  const products = await getAllProducts(section);
   return Array.from(new Set(products.map((p) => p.category))).sort();
 }
 

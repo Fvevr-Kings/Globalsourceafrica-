@@ -9,8 +9,8 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const [products, categories] = await Promise.all([
-    getAllProducts(),
-    getCategories(),
+    getAllProducts("farm"),
+    getCategories("farm"),
   ]);
 
   return (
@@ -19,7 +19,7 @@ export default async function HomePage() {
         <HeroBanner />
       </div>
 
-      <Storefront initialProducts={products} categories={categories} />
+      <Storefront initialProducts={products} categories={categories} section="farm" />
 
       <div className="mt-10">
         <WhyUsToggle />

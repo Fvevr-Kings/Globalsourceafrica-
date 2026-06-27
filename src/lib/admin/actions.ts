@@ -26,6 +26,7 @@ export type ProductInput = {
   supplier_id: string | null;
   slug?: string;
   name: string;
+  section?: string; // 'farm' (default) | 'raw'
   category: string;
   origin_country: string;
   origin_flag: string | null;
@@ -86,6 +87,7 @@ export async function saveProduct(input: ProductInput): Promise<ActionResult> {
 
     revalidatePath("/admin/products");
     revalidatePath("/");
+    revalidatePath("/raw-materials");
     return { ok: true, id: productId! };
   } catch (e: any) {
     return { ok: false, error: e.message ?? "Failed to save product" };
@@ -100,6 +102,7 @@ export async function deleteProduct(id: string): Promise<ActionResult> {
     if (error) return { ok: false, error: error.message };
     revalidatePath("/admin/products");
     revalidatePath("/");
+    revalidatePath("/raw-materials");
     return { ok: true, id };
   } catch (e: any) {
     return { ok: false, error: e.message ?? "Failed to delete" };
@@ -271,6 +274,7 @@ export async function approveProduct(id: string): Promise<ActionResult> {
     if (error) return { ok: false, error: error.message };
     revalidatePath("/admin/products");
     revalidatePath("/");
+    revalidatePath("/raw-materials");
     return { ok: true, id };
   } catch (e: any) {
     return { ok: false, error: e.message ?? "Failed to approve product" };
@@ -291,6 +295,7 @@ export async function rejectProduct(
     if (error) return { ok: false, error: error.message };
     revalidatePath("/admin/products");
     revalidatePath("/");
+    revalidatePath("/raw-materials");
     return { ok: true, id };
   } catch (e: any) {
     return { ok: false, error: e.message ?? "Failed to reject product" };

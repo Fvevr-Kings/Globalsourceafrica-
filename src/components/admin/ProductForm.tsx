@@ -25,6 +25,7 @@ export function ProductForm({
   const [f, setF] = useState({
     name: initial?.name ?? "",
     slug: initial?.slug ?? "",
+    section: initial?.section ?? "farm",
     category: initial?.category ?? "Grains",
     origin_country: initial?.origin_country ?? "",
     origin_flag: initial?.origin_flag ?? "",
@@ -67,6 +68,7 @@ export function ProductForm({
       supplier_id: f.supplier_id || null,
       slug: f.slug.trim() || undefined,
       name: f.name.trim(),
+      section: f.section,
       category: f.category,
       origin_country: f.origin_country.trim(),
       origin_flag: f.origin_flag.trim() || null,
@@ -99,6 +101,17 @@ export function ProductForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <Text label="Name *" value={f.name} onChange={(v) => set("name", v)} />
           <Text label="Slug (auto if blank)" value={f.slug} onChange={(v) => set("slug", v)} />
+          <label className="block">
+            <span className="text-sm font-medium text-ink">Store section</span>
+            <select
+              value={f.section}
+              onChange={(e) => set("section", e.target.value)}
+              className={inputCls}
+            >
+              <option value="farm">Farm products (main storefront)</option>
+              <option value="raw">Raw materials</option>
+            </select>
+          </label>
           <label className="block">
             <span className="text-sm font-medium text-ink">Category</span>
             <input

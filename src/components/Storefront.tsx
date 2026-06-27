@@ -15,9 +15,11 @@ import { ProductGrid } from "./ProductGrid";
 export function Storefront({
   initialProducts,
   categories,
+  section,
 }: {
   initialProducts: Product[];
   categories: string[];
+  section?: string;
 }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Product[]>(initialProducts);
@@ -37,7 +39,11 @@ export function Storefront({
     const id = ++reqId.current;
     const t = setTimeout(async () => {
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+        const res = await fetch(
+          `/api/search?q=${encodeURIComponent(q)}${
+            section ? `&section=${encodeURIComponent(section)}` : ""
+          }`
+        );
         const data = (await res.json()) as { products: Product[] };
         if (id === reqId.current) setResults(data.products ?? []);
       } catch {
@@ -47,7 +53,7 @@ export function Storefront({
       }
     }, 250);
     return () => clearTimeout(t);
-  }, [query, initialProducts]);
+  }, [query, initialProducts, section]);
 
   const visible = useMemo(
     () =>

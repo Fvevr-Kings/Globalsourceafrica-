@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Menu, X, FileText, Store, LogIn, Home } from "lucide-react";
+import { Menu, X, FileText, Store, LogIn, Home, Boxes } from "lucide-react";
 
 // Public storefront menu. Intentionally NO "Admin" link — staff go to /admin
 // directly; advertising it to every customer is poor practice (the route is
 // still gated server-side regardless).
 const links = [
-  { href: "/", label: "Storefront", icon: Home },
+  { href: "/", label: "Shop farm products", icon: Home },
+  { href: "/raw-materials", label: "Shop African raw materials", icon: Boxes },
   { href: "/request-quote", label: "Request a quote", icon: FileText },
   { href: "/become-a-supplier", label: "Become a supplier", icon: Store },
   { href: "/merchant", label: "Supplier login", icon: LogIn },
