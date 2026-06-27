@@ -12,6 +12,7 @@
     "staff:add": "tsx scripts/add-staff.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.106.0",
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.45.4",
     "lucide-react": "^0.453.0",

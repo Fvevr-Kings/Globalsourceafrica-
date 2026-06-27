@@ -5,6 +5,7 @@ import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/Header";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
+import { ChatWidget } from "@/components/ChatWidget";
 
 // Clean, modern display font for the brand wordmark + headings.
 const display = Outfit({
@@ -59,6 +60,7 @@ export default function RootLayout({
           <SiteFooter />
         </CartProvider>
         <ServiceWorkerRegister />
+        {process.env.ANTHROPIC_API_KEY ? <ChatWidget /> : null}
       </body>
     </html>
   );
