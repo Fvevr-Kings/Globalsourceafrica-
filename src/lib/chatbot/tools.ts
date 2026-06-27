@@ -107,6 +107,7 @@ export async function runTool(name: string, input: any): Promise<ToolResult> {
             price_usd: p.retail_price_usd,
             in_stock: p.in_stock,
             blurb: p.blurb,
+            image: p.image_urls?.[0] ?? null,
             url: `/product/${p.slug}`,
           })),
         };
@@ -132,6 +133,8 @@ export async function runTool(name: string, input: any): Promise<ToolResult> {
             moisture_pct: product.moisture_pct,
             certifications: product.certifications,
             quality_report_url: product.quality_report_url,
+            price_usd: product.retail_price_usd,
+            image: product.image_urls?.[0] ?? null,
             bulk_tiers: (product.tiers ?? []).map((t) => ({
               min_qty: t.min_qty,
               unit_price_usd: t.unit_price_usd,

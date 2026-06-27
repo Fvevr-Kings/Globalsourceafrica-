@@ -1,9 +1,53 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, ChevronRight, Leaf } from "lucide-react";
 
-type Msg = { role: "user" | "assistant"; content: string };
+type ProductCard = {
+  name: string;
+  slug: string;
+  price_usd: number | null;
+  base_unit: string | null;
+  origin_country: string | null;
+  in_stock: boolean;
+  image: string | null;
+  url: string;
+};
+
+type Msg = { role: "user" | "assistant"; content: string; products?: ProductCard[] };
+
+function ProductCards({ products }: { products: ProductCard[] }) {
+  return (
+    <div className="mt-2 space-y-2">
+      {products.map((p) => (
+        <a
+          key={p.slug || p.name}
+          href={p.url}
+          className="flex items-center gap-3 rounded-xl border border-greenLine bg-white p-2 transition hover:border-green hover:shadow-sm"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-greenSoft">
+            {p.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={p.image} alt={p.name} className="h-full w-full object-cover" />
+            ) : (
+              <Leaf className="h-5 w-5 text-green" />
+            )}
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm font-semibold text-ink">{p.name}</p>
+            <p className="truncate text-xs text-sub">
+              {p.price_usd != null ? `$${p.price_usd}` : ""}
+              {p.base_unit ? ` · ${p.base_unit}` : ""}
+              {p.origin_country ? ` · ${p.origin_country}` : ""}
+            </p>
+            {!p.in_stock && <p className="text-xs text-orangeDark">Out of stock</p>}
+          </div>
+          <ChevronRight className="h-4 w-4 shrink-0 text-green" />
+        </a>
+      ))}
+    </div>
+  );
+}
 
 const GREETING =
   "Hi! I'm the GlobalSource Africa assistant. I can help you find products, explain bulk pricing, or take a quote or sourcing request. What are you looking for?";
@@ -83,7 +127,10 @@ export function ChatWidget() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error ?? "Something went wrong.");
-      setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
+      setMessages((m) => [
+        ...m,
+        { role: "assistant", content: data.reply, products: data.products },
+      ]);
     } catch (e: any) {
       setError(e?.message ?? "The assistant is unavailable right now.");
     } finally {
@@ -117,19 +164,21 @@ export function ChatWidget() {
 
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-cream px-3 py-4">
             {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm ${
-                    m.role === "user"
-                      ? "bg-orange text-white"
-                      : "border border-greenLine bg-white text-ink"
-                  }`}
-                >
-                  {m.role === "assistant" ? renderContent(m.content) : m.content}
+              <div key={i}>
+                <div className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
+                  <div
+                    className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm ${
+                      m.role === "user"
+                        ? "bg-orange text-white"
+                        : "border border-greenLine bg-white text-ink"
+                    }`}
+                  >
+                    {m.role === "assistant" ? renderContent(m.content) : m.content}
+                  </div>
                 </div>
+                {m.role === "assistant" && m.products && m.products.length > 0 && (
+                  <ProductCards products={m.products} />
+                )}
               </div>
             ))}
             {busy && (

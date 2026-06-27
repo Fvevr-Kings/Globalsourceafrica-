@@ -28,13 +28,38 @@ How you talk (important):
 
 How to help:
 - ALWAYS use tools for facts about products, prices, categories, and provenance. NEVER invent a product, price, slug, or certification. If a tool returns nothing, say so plainly.
-- When a customer is looking for something, call search_products. If it finds matches, summarize the top few with their price and a link (the 'url' field, e.g. /product/<slug>). If it finds NOTHING, tell them it isn't currently listed and offer to create a sourcing request.
+- When a customer is looking for something, call search_products. Matching products are shown to the customer automatically as tappable cards right below your message, so DON'T paste raw URLs or slugs in your text — just describe them naturally (e.g. "Yes! Here's our cocoa 👇") and let the cards do the rest. If search finds NOTHING, tell them it isn't currently listed and offer to create a sourcing request.
 - For "how much for N units" questions, call get_product_details and explain the relevant bulk tier.
 - To take a quote or sourcing request: gather the customer's name, an email OR phone, and what they want (product + quantity + destination if relevant). Confirm the details back to them, THEN call submit_quote_request. After it succeeds, reassure them the team will follow up.
 - You handle product discovery, quotes/sourcing, provenance questions, bulk pricing, how the marketplace works, and supplier onboarding. For anything outside that (e.g. order-specific account issues), point them to use the site or contact the team — don't guess.
 - Never ask for or store payment card details, passwords, or OTP codes.`;
 
 type IncomingMessage = { role: "user" | "assistant"; content: string };
+
+type ProductCard = {
+  name: string;
+  slug: string;
+  price_usd: number | null;
+  base_unit: string | null;
+  origin_country: string | null;
+  in_stock: boolean;
+  image: string | null;
+  url: string;
+};
+
+// Normalize a search_products / get_product_details result into a card.
+function toCard(p: any): ProductCard {
+  return {
+    name: p?.name ?? "",
+    slug: p?.slug ?? "",
+    price_usd: p?.price_usd ?? p?.retail_price_usd ?? null,
+    base_unit: p?.base_unit ?? null,
+    origin_country: p?.origin_country ?? null,
+    in_stock: p?.in_stock ?? true,
+    image: p?.image ?? null,
+    url: p?.url ?? (p?.slug ? `/product/${p.slug}` : "/"),
+  };
+}
 
 // Safety net: strip Markdown emphasis/heading/code markers so replies read as
 // plain, friendly text even if the model slips into Markdown.
@@ -87,6 +112,10 @@ export async function POST(req: Request) {
     content: m.content,
   }));
 
+  // Product cards to show under the reply — taken from the most recent product
+  // tool call this turn (what the assistant is actually answering about).
+  let cards: ProductCard[] = [];
+
   try {
     for (let round = 0; round < MAX_TOOL_ROUNDS; round++) {
       const response = await client.messages.create({
@@ -106,6 +135,12 @@ export async function POST(req: Request) {
         const toolResults: Anthropic.ToolResultBlockParam[] = [];
         for (const tu of toolUses) {
           const result = await runTool(tu.name, tu.input);
+          // Capture product cards from the latest product-bearing tool call.
+          if (result.ok && tu.name === "search_products") {
+            cards = (result.data as any[]).map(toCard);
+          } else if (result.ok && tu.name === "get_product_details") {
+            cards = [toCard(result.data)];
+          }
           toolResults.push({
             type: "tool_result",
             tool_use_id: tu.id,
@@ -126,6 +161,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json({
         reply: plainText(text) || "Sorry, I didn't catch that — could you rephrase?",
+        products: cards.slice(0, 4),
       });
     }
 
