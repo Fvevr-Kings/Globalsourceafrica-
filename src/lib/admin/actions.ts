@@ -297,6 +297,26 @@ export async function rejectProduct(
   }
 }
 
+// ---- Chatbot knowledge base ------------------------------------------------
+
+export async function updateChatbotKnowledge(
+  content: string
+): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    const db = createSupabaseAdminClient();
+    const { error } = await db.from("chatbot_knowledge").upsert(
+      { id: true, content: content ?? "", updated_at: new Date().toISOString() },
+      { onConflict: "id" }
+    );
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/knowledge");
+    return { ok: true, id: "knowledge" };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to save knowledge" };
+  }
+}
+
 // ---- Billboard banners -----------------------------------------------------
 
 export type BannerInput = {

@@ -220,7 +220,7 @@ export function ChatWidget() {
             <MessageCircle className="h-5 w-5 shrink-0" />
             <div className="min-w-0 flex-1 leading-tight">
               <p className="font-display text-sm font-semibold">GlobalSource Assistant</p>
-              <p className="text-xs text-white/80">Find products · quotes · sourcing</p>
+              <p className="text-xs text-white/80">Products · Quotes · Sourcing</p>
             </div>
             <button
               onClick={() => setOpen(false)}

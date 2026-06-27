@@ -10,6 +10,7 @@ import {
   Store,
   Image as ImageIcon,
   FileText,
+  Bot,
   LogOut,
   ExternalLink,
 } from "lucide-react";
@@ -22,6 +23,7 @@ const links = [
   { href: "/admin/quotes", label: "Quotes", icon: FileText },
   { href: "/admin/merchants", label: "Merchants", icon: Store },
   { href: "/admin/banners", label: "Billboard", icon: ImageIcon },
+  { href: "/admin/knowledge", label: "Assistant", icon: Bot },
 ];
 
 export function AdminNav({

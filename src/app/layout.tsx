@@ -20,10 +20,33 @@ const inter = Inter({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const SHARE_TAGLINE = "Connecting Africa's resources to the global market";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "GlobalSource Africa — non-perishable African farm products",
   description:
     "Grains, pulses, nuts, dried spices, cocoa, coffee and shea from verified African origins. Sold and backed by GlobalSource Africa.",
+  openGraph: {
+    type: "website",
+    siteName: "GlobalSource Africa",
+    title: "GlobalSource Africa",
+    description: SHARE_TAGLINE,
+    url: "/",
+    images: [{ url: "/icons/icon-512.png", width: 512, height: 512, alt: "GlobalSource Africa" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GlobalSource Africa",
+    description: SHARE_TAGLINE,
+    images: ["/icons/icon-512.png"],
+  },
   manifest: "/manifest.webmanifest",
   applicationName: "GlobalSource Africa",
   appleWebApp: {

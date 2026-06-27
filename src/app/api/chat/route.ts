@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { tools, runTool } from "@/lib/chatbot/tools";
+import { getKnowledgeText } from "@/lib/chatbot/knowledge";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -107,6 +108,12 @@ export async function POST(req: Request) {
 
   const client = new Anthropic({ apiKey });
 
+  // Append the admin-maintained knowledge base to the system prompt.
+  const knowledge = await getKnowledgeText();
+  const system = knowledge
+    ? `${SYSTEM_PROMPT}\n\nADDITIONAL BUSINESS KNOWLEDGE (maintained by the team — treat as authoritative and use it whenever relevant):\n${knowledge}`
+    : SYSTEM_PROMPT;
+
   const messages: Anthropic.MessageParam[] = history.map((m) => ({
     role: m.role,
     content: m.content,
@@ -121,7 +128,7 @@ export async function POST(req: Request) {
       const response = await client.messages.create({
         model: CHAT_MODEL,
         max_tokens: 1024,
-        system: SYSTEM_PROMPT,
+        system,
         tools,
         messages,
       });
