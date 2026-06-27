@@ -99,6 +99,12 @@ export function ChatWidget() {
   // Restore an in-progress conversation (within TTL) so the user can pick up
   // where they left off after navigating to a product page and back. Reads
   // localStorage only after mount (SSR-safe).
+  //
+  // We intentionally do NOT auto-reopen the panel here. On mobile the panel is
+  // fullscreen (fixed inset-0), so re-opening it on a fresh page load would
+  // cover the product page the user just navigated to from a product link —
+  // making it look like the link "redirected back to the chatbot". The
+  // conversation is still restored, so reopening the launcher shows it intact.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -112,7 +118,6 @@ export function ChatWidget() {
           Date.now() - saved.updatedAt < CHAT_TTL_MS
         ) {
           setMessages(saved.messages);
-          if (saved.open) setOpen(true);
         } else {
           localStorage.removeItem(STORAGE_KEY);
         }
@@ -120,6 +125,21 @@ export function ChatWidget() {
     } catch {}
     hydratedRef.current = true;
   }, []);
+
+  // While the fullscreen mobile panel is open, lock background page scrolling so
+  // touch-scrolling the message list can't chain to the body and drag the whole
+  // panel (and its input bar) around. Desktop keeps its corner widget, so we
+  // only lock below the sm breakpoint.
+  useEffect(() => {
+    if (!open) return;
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(min-width: 640px)").matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
 
   // Persist on every change (after hydration), refreshing the TTL timestamp.
   useEffect(() => {
@@ -196,7 +216,7 @@ export function ChatWidget() {
       {/* Panel */}
       {open && (
         <div className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-white shadow-2xl sm:inset-auto sm:bottom-24 sm:right-5 sm:h-[32rem] sm:max-h-[calc(100vh-7rem)] sm:w-[22rem] sm:max-w-[calc(100vw-2.5rem)] sm:rounded-2xl sm:border sm:border-greenLine">
-          <div className="flex items-center gap-2 bg-green px-4 py-3 text-white">
+          <div className="flex shrink-0 items-center gap-2 bg-green px-4 py-3 text-white">
             <MessageCircle className="h-5 w-5 shrink-0" />
             <div className="min-w-0 flex-1 leading-tight">
               <p className="font-display text-sm font-semibold">GlobalSource Assistant</p>
@@ -211,7 +231,10 @@ export function ChatWidget() {
             </button>
           </div>
 
-          <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-cream px-3 py-4">
+          <div
+            ref={scrollRef}
+            className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain bg-cream px-3 py-4"
+          >
             {messages.map((m, i) => (
               <div key={i}>
                 <div className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
@@ -247,7 +270,7 @@ export function ChatWidget() {
               e.preventDefault();
               send();
             }}
-            className="flex items-center gap-2 border-t border-greenLine bg-white p-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:pb-2"
+            className="flex shrink-0 items-center gap-2 border-t border-greenLine bg-white p-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:pb-2"
           >
             <input
               ref={inputRef}
