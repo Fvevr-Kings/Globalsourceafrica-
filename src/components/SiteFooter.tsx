@@ -10,7 +10,15 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-16 border-t border-greenLine bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-sub sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/icons/the_footer.png"
+          alt="GlobalSource Africa Limited"
+          className="h-16 w-auto sm:h-20"
+        />
+      </div>
+      <div className="mx-auto flex max-w-6xl flex-col gap-2 border-t border-greenLine px-4 py-8 text-sm text-sub sm:flex-row sm:items-center sm:justify-between">
         <p>
           Sold and backed by GlobalSource Africa. Every order is fulfilled by
           us — you pay the business, never a stranger.
