@@ -146,20 +146,29 @@ export function ChatWidget() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close chat" : "Open chat assistant"}
-        className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green text-white shadow-lg transition hover:bg-orange focus:outline-none focus:ring-2 focus:ring-orange/50"
+        className={`fixed bottom-5 right-5 z-40 h-14 w-14 items-center justify-center rounded-full bg-green text-white shadow-lg transition hover:bg-orange focus:outline-none focus:ring-2 focus:ring-orange/50 ${
+          open ? "hidden sm:flex" : "flex"
+        }`}
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>
 
       {/* Panel */}
       {open && (
-        <div className="fixed bottom-24 right-5 z-50 flex h-[32rem] max-h-[calc(100vh-7rem)] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-2xl border border-greenLine bg-white shadow-2xl">
+        <div className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-white shadow-2xl sm:inset-auto sm:bottom-24 sm:right-5 sm:h-[32rem] sm:max-h-[calc(100vh-7rem)] sm:w-[22rem] sm:max-w-[calc(100vw-2.5rem)] sm:rounded-2xl sm:border sm:border-greenLine">
           <div className="flex items-center gap-2 bg-green px-4 py-3 text-white">
-            <MessageCircle className="h-5 w-5" />
-            <div className="leading-tight">
+            <MessageCircle className="h-5 w-5 shrink-0" />
+            <div className="min-w-0 flex-1 leading-tight">
               <p className="font-display text-sm font-semibold">GlobalSource Assistant</p>
               <p className="text-xs text-white/80">Find products · quotes · sourcing</p>
             </div>
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close chat"
+              className="-mr-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full hover:bg-white/15"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
 
           <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-cream px-3 py-4">
@@ -198,14 +207,15 @@ export function ChatWidget() {
               e.preventDefault();
               send();
             }}
-            className="flex items-center gap-2 border-t border-greenLine bg-white p-2"
+            className="flex items-center gap-2 border-t border-greenLine bg-white p-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] sm:pb-2"
           >
             <input
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about a product…"
-              className="flex-1 rounded-full border border-greenLine px-4 py-2 text-sm text-ink focus:border-green focus:outline-none"
+              // text-base (16px) prevents iOS Safari from auto-zooming on focus.
+              className="flex-1 rounded-full border border-greenLine px-4 py-2 text-base text-ink focus:border-green focus:outline-none"
             />
             <button
               type="submit"
