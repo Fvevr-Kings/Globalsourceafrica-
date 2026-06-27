@@ -22,14 +22,14 @@ export function Header() {
         {/* Top-left menu: quote, supplier portal, admin. */}
         <HeaderMenu />
 
-        <Link href="/" aria-label="GlobalSource Africa — home" className="mx-auto flex items-center gap-2">
+        <Link href="/" aria-label="GlobalSource Africa — home" className="mx-auto flex items-center gap-1">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/icons/main_logo.png"
             alt="GlobalSource Africa"
-            className="h-10 w-auto sm:h-11"
+            className="h-9 w-auto"
           />
-          <span className="font-display text-lg font-bold tracking-tight text-green sm:text-xl">
+          <span className="font-display text-sm font-bold tracking-tight text-green sm:text-base">
             GlobalSource Africa
           </span>
         </Link>

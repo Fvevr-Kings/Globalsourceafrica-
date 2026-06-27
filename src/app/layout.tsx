@@ -31,6 +31,10 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "GlobalSource",
   },
+  other: {
+    // Standard PWA capability meta (replaces the deprecated apple-only one).
+    "mobile-web-app-capable": "yes",
+  },
   icons: {
     icon: [
       { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
