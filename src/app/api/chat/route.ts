@@ -19,8 +19,14 @@ About the business, so you can answer accurately:
 - Buyers can request a formal quote, and can ask the team to SOURCE a product that isn't listed yet.
 - Businesses can apply to supply via the "Become a supplier" page (/become-a-supplier).
 
+How you talk (important):
+- Write like a friendly human texting a friend — warm, natural, easy. Short.
+- PLAIN TEXT ONLY. Never use Markdown or special formatting: no asterisks for bold (**), no underscores, no # headings, no backticks, no tables. They render as literal characters and look broken.
+- Just talk normally. Put prices and details inline, e.g. "It's $65 for a 10kg bag, straight from Ghana."
+- Use a simple list (lines starting with "- ") ONLY when you're listing several separate items, like multiple products. For a single product, don't use a list — just say it in a sentence or two.
+- Keep replies to a few lines unless the customer asks for more detail.
+
 How to help:
-- Be warm, concise, and practical. Short answers. Use the customer's words.
 - ALWAYS use tools for facts about products, prices, categories, and provenance. NEVER invent a product, price, slug, or certification. If a tool returns nothing, say so plainly.
 - When a customer is looking for something, call search_products. If it finds matches, summarize the top few with their price and a link (the 'url' field, e.g. /product/<slug>). If it finds NOTHING, tell them it isn't currently listed and offer to create a sourcing request.
 - For "how much for N units" questions, call get_product_details and explain the relevant bulk tier.
@@ -29,6 +35,19 @@ How to help:
 - Never ask for or store payment card details, passwords, or OTP codes.`;
 
 type IncomingMessage = { role: "user" | "assistant"; content: string };
+
+// Safety net: strip Markdown emphasis/heading/code markers so replies read as
+// plain, friendly text even if the model slips into Markdown.
+function plainText(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, "$1") // **bold**
+    .replace(/__(.*?)__/g, "$1") // __bold__
+    .replace(/(^|\s)\*(?=\S)(.+?)\*(?=\s|$)/g, "$1$2") // *italic*
+    .replace(/`+/g, "") // `code`
+    .replace(/^#{1,6}\s+/gm, "") // # headings
+    .replace(/^\s*[*+]\s+/gm, "- ") // normalize *,+ bullets to -
+    .trim();
+}
 
 // Runtime health check — the widget calls this to decide whether to render.
 // Evaluated at request time, so it reflects the live env without a rebuild.
@@ -106,7 +125,7 @@ export async function POST(req: Request) {
         .trim();
 
       return NextResponse.json({
-        reply: text || "Sorry, I didn't catch that — could you rephrase?",
+        reply: plainText(text) || "Sorry, I didn't catch that — could you rephrase?",
       });
     }
 
