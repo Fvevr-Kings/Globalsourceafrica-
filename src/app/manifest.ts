@@ -4,7 +4,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "GlobalSource Africa",
-    short_name: "GlobalSource",
+    short_name: "GSA",
     description:
       "Grains, pulses, nuts, dried spices, cocoa, coffee and shea from verified African origins.",
     start_url: "/",

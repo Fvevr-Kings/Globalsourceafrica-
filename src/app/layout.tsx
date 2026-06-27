@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "GlobalSource",
+    title: "GSA",
   },
   other: {
     // Standard PWA capability meta (replaces the deprecated apple-only one).
