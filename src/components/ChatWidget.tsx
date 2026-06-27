@@ -80,6 +80,9 @@ function renderContent(text: string) {
   return parts;
 }
 
+const STORAGE_KEY = "gsa_chat_v1";
+const CHAT_TTL_MS = 60 * 60 * 1000; // resume within 1h of last activity, else fresh
+
 export function ChatWidget() {
   const [enabled, setEnabled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -91,6 +94,43 @@ export function ChatWidget() {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hydratedRef = useRef(false);
+
+  // Restore an in-progress conversation (within TTL) so the user can pick up
+  // where they left off after navigating to a product page and back. Reads
+  // localStorage only after mount (SSR-safe).
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (
+          saved &&
+          Array.isArray(saved.messages) &&
+          saved.messages.length > 0 &&
+          typeof saved.updatedAt === "number" &&
+          Date.now() - saved.updatedAt < CHAT_TTL_MS
+        ) {
+          setMessages(saved.messages);
+          if (saved.open) setOpen(true);
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    } catch {}
+    hydratedRef.current = true;
+  }, []);
+
+  // Persist on every change (after hydration), refreshing the TTL timestamp.
+  useEffect(() => {
+    if (!hydratedRef.current) return;
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ messages: messages.slice(-50), open, updatedAt: Date.now() })
+      );
+    } catch {}
+  }, [messages, open]);
 
   // Only render once the server confirms the assistant is configured.
   useEffect(() => {
