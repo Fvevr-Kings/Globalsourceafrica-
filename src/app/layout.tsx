@@ -60,7 +60,7 @@ export default function RootLayout({
           <SiteFooter />
         </CartProvider>
         <ServiceWorkerRegister />
-        {process.env.ANTHROPIC_API_KEY ? <ChatWidget /> : null}
+        <ChatWidget />
       </body>
     </html>
   );

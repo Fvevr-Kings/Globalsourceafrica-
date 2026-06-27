@@ -37,6 +37,7 @@ function renderContent(text: string) {
 }
 
 export function ChatWidget() {
+  const [enabled, setEnabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([
     { role: "assistant", content: GREETING },
@@ -46,6 +47,18 @@ export function ChatWidget() {
   const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Only render once the server confirms the assistant is configured.
+  useEffect(() => {
+    let active = true;
+    fetch("/api/chat")
+      .then((r) => (r.ok ? r.json() : { enabled: false }))
+      .then((d) => active && setEnabled(Boolean(d?.enabled)))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -77,6 +90,8 @@ export function ChatWidget() {
       setBusy(false);
     }
   }
+
+  if (!enabled) return null;
 
   return (
     <>

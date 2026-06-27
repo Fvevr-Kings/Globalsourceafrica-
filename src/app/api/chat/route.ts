@@ -30,6 +30,12 @@ How to help:
 
 type IncomingMessage = { role: "user" | "assistant"; content: string };
 
+// Runtime health check — the widget calls this to decide whether to render.
+// Evaluated at request time, so it reflects the live env without a rebuild.
+export async function GET() {
+  return NextResponse.json({ enabled: Boolean(process.env.ANTHROPIC_API_KEY) });
+}
+
 export async function POST(req: Request) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
