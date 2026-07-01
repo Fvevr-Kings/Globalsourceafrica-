@@ -9,3 +9,7 @@ next-env.d.ts
 .vercel
 .DS_Store
 npm-debug.log*
+
+# Secrets / credentials — never commit
+client_secret_*.json
+*.credentials.json
