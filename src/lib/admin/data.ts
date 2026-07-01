@@ -142,6 +142,27 @@ export async function listBanners() {
   return data ?? [];
 }
 
+export async function listAdminPosts() {
+  const db = createSupabaseAdminClient();
+  const { data, error } = await db
+    .from("posts")
+    .select("id, title, kind, event_date, published, image_urls, created_at")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function getAdminPost(id: string) {
+  const db = createSupabaseAdminClient();
+  const { data, error } = await db
+    .from("posts")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+  if (error) throw error;
+  return data;
+}
+
 export async function listQuotes() {
   const db = createSupabaseAdminClient();
   const { data, error } = await db

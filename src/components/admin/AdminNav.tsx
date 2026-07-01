@@ -10,6 +10,7 @@ import {
   Store,
   Image as ImageIcon,
   FileText,
+  Newspaper,
   Bot,
   LogOut,
   ExternalLink,
@@ -23,6 +24,7 @@ const links = [
   { href: "/admin/quotes", label: "Quotes", icon: FileText },
   { href: "/admin/merchants", label: "Merchants", icon: Store },
   { href: "/admin/banners", label: "Billboard", icon: ImageIcon },
+  { href: "/admin/posts", label: "News & events", icon: Newspaper },
   { href: "/admin/knowledge", label: "Assistant", icon: Bot },
 ];
 

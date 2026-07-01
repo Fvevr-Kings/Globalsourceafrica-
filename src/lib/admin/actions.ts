@@ -302,6 +302,60 @@ export async function rejectProduct(
   }
 }
 
+// ---- News & events posts ---------------------------------------------------
+
+export type PostInput = {
+  id?: string;
+  title: string;
+  body: string | null;
+  image_urls: string[];
+  kind: string; // 'news' | 'event'
+  event_date: string | null;
+  published: boolean;
+};
+
+export async function savePost(input: PostInput): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    if (!input.title?.trim()) return { ok: false, error: "Title is required." };
+    const db = createSupabaseAdminClient();
+    const { id, ...rest } = input;
+    const row = {
+      ...rest,
+      title: input.title.trim(),
+      event_date: input.event_date || null,
+    };
+    let postId = id;
+    if (id) {
+      const { error } = await db.from("posts").update(row).eq("id", id);
+      if (error) return { ok: false, error: error.message };
+    } else {
+      const { data, error } = await db.from("posts").insert(row).select("id").single();
+      if (error) return { ok: false, error: error.message };
+      postId = data.id;
+    }
+    revalidatePath("/admin/posts");
+    revalidatePath("/about");
+    return { ok: true, id: postId! };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to save post" };
+  }
+}
+
+export async function deletePost(id: string): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    const db = createSupabaseAdminClient();
+    const { error } = await db.from("posts").delete().eq("id", id);
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/posts");
+    revalidatePath("/about");
+    return { ok: true, id };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to delete post" };
+  }
+}
+
 // ---- Chatbot knowledge base ------------------------------------------------
 
 export async function updateChatbotKnowledge(
