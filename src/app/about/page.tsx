@@ -72,10 +72,14 @@ export default async function AboutPage() {
           <h2 className="font-display text-lg font-semibold text-ink">A note from our CEO</h2>
           <p className="mt-2 text-sm italic leading-relaxed text-sub">
             &ldquo;Every bag we ship carries the name and effort of an African
-            producer. Our promise is simple — quality you can verify, and a
-            partner you can count on, order after order.&rdquo;
+            producer. We built GlobalSource Africa on four things — vision,
+            integrity, impact, and legacy — so that quality you can verify and a
+            partner you can count on come standard, order after order.&rdquo;
           </p>
-          <p className="mt-3 text-sm font-semibold text-ink">The GlobalSource Africa Team</p>
+          <p className="mt-3 text-sm font-semibold text-ink">Isreal Kingsley</p>
+          <p className="text-sm text-sub">
+            CEO, GlobalSource Africa · &ldquo;Building Africa. Supplying the World.&rdquo;
+          </p>
         </div>
       </section>
 

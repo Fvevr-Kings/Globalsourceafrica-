@@ -10,7 +10,7 @@ export function CeoPhoto({ src = "/ceo.jpg" }: { src?: string }) {
 
   if (broken) {
     return (
-      <div className="flex h-40 w-40 items-center justify-center rounded-2xl bg-greenSoft">
+      <div className="flex h-60 w-48 items-center justify-center rounded-2xl bg-greenSoft">
         <User className="h-16 w-16 text-green" />
       </div>
     );
@@ -20,9 +20,9 @@ export function CeoPhoto({ src = "/ceo.jpg" }: { src?: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
-      alt="CEO"
+      alt="Isreal Kingsley, CEO of GlobalSource Africa"
       onError={() => setBroken(true)}
-      className="h-40 w-40 rounded-2xl object-cover"
+      className="h-60 w-48 rounded-2xl object-cover object-top shadow-sm"
     />
   );
 }
