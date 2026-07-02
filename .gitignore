@@ -13,3 +13,9 @@ npm-debug.log*
 # Secrets / credentials — never commit
 client_secret_*.json
 *.credentials.json
+
+# Local product image staging for scripts/upload-images.ts (uploaded to Storage)
+/scripts/images/
+
+# Heavy source video for the banner; only the optimized /public/banner.mp4 ships
+/public/banner-src.mp4
