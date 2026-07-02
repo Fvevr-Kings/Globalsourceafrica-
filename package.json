@@ -9,7 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed.ts",
-    "staff:add": "tsx scripts/add-staff.ts"
+    "staff:add": "tsx scripts/add-staff.ts",
+    "admin:create": "tsx scripts/create-admin-user.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0",
