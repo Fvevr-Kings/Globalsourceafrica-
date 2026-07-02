@@ -54,13 +54,7 @@ export async function HeroBanner({
           <DefaultGraphic />
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-r from-green/90 via-green/55 to-green/10" />
-
-        <div className="relative flex h-full max-w-2xl flex-col justify-center px-6 sm:px-10">
-          <h1 className="font-display text-xl font-semibold leading-tight tracking-tight drop-shadow sm:text-2xl lg:text-3xl">
-            {title}
-          </h1>
-        </div>
+        <h1 className="sr-only">{title}</h1>
       </div>
     </section>
   );
