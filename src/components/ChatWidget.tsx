@@ -141,6 +141,33 @@ export function ChatWidget() {
     };
   }, [open]);
 
+  // 100dvh doesn't shrink for the on-screen keyboard (keyboards aren't part of
+  // the CSS viewport spec), so the fullscreen mobile panel keeps its full
+  // height and the input bar at its bottom ends up hidden behind the keyboard.
+  // Track the actual visible area via visualViewport and size the panel to
+  // that instead, so the input always sits right above the keyboard.
+  const [mobileViewport, setMobileViewport] = useState<{ top: number; height: number } | null>(
+    null
+  );
+  useEffect(() => {
+    if (!open) return;
+    if (typeof window === "undefined") return;
+    const vv = window.visualViewport;
+    if (!vv || window.matchMedia("(min-width: 640px)").matches) return;
+
+    function update() {
+      setMobileViewport({ top: vv!.offsetTop, height: vv!.height });
+    }
+    update();
+    vv.addEventListener("resize", update);
+    vv.addEventListener("scroll", update);
+    return () => {
+      vv.removeEventListener("resize", update);
+      vv.removeEventListener("scroll", update);
+      setMobileViewport(null);
+    };
+  }, [open]);
+
   // Persist on every change (after hydration), refreshing the TTL timestamp.
   useEffect(() => {
     if (!hydratedRef.current) return;
@@ -215,7 +242,12 @@ export function ChatWidget() {
 
       {/* Panel */}
       {open && (
-        <div className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-white shadow-2xl sm:inset-auto sm:bottom-24 sm:right-5 sm:h-[32rem] sm:max-h-[calc(100vh-7rem)] sm:w-[22rem] sm:max-w-[calc(100vw-2.5rem)] sm:rounded-2xl sm:border sm:border-greenLine">
+        <div
+          style={
+            mobileViewport ? { top: mobileViewport.top, height: mobileViewport.height } : undefined
+          }
+          className="fixed inset-0 z-50 flex h-[100dvh] w-full flex-col overflow-hidden bg-white shadow-2xl sm:inset-auto sm:bottom-24 sm:right-5 sm:h-[32rem] sm:max-h-[calc(100vh-7rem)] sm:w-[22rem] sm:max-w-[calc(100vw-2.5rem)] sm:rounded-2xl sm:border sm:border-greenLine"
+        >
           <div className="flex shrink-0 items-center gap-2 bg-green px-4 py-3 text-white">
             <MessageCircle className="h-5 w-5 shrink-0" />
             <div className="min-w-0 flex-1 leading-tight">
