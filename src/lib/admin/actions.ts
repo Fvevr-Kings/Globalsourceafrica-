@@ -109,9 +109,13 @@ export async function deleteProduct(id: string): Promise<ActionResult> {
   }
 }
 
+// Order lifecycle: every order flows through us to the merchant.
+//   placed → confirmed → processing (with supplier) → shipped → delivered
+// refunded is a terminal off-track state.
 const ORDER_STATUSES = [
   "placed",
   "confirmed",
+  "processing",
   "shipped",
   "delivered",
   "refunded",
@@ -119,7 +123,8 @@ const ORDER_STATUSES = [
 
 export async function updateOrderStatus(
   id: string,
-  status: string
+  status: string,
+  trackingNote?: string | null
 ): Promise<ActionResult> {
   try {
     await assertStaff();
@@ -127,7 +132,12 @@ export async function updateOrderStatus(
       return { ok: false, error: "Invalid status" };
     }
     const db = createSupabaseAdminClient();
-    const { error } = await db.from("orders").update({ status }).eq("id", id);
+    const patch: Record<string, unknown> = {
+      status,
+      status_updated_at: new Date().toISOString(),
+    };
+    if (trackingNote !== undefined) patch.tracking_note = trackingNote || null;
+    const { error } = await db.from("orders").update(patch).eq("id", id);
     if (error) return { ok: false, error: error.message };
     revalidatePath(`/admin/orders/${id}`);
     revalidatePath("/admin/orders");
@@ -438,5 +448,142 @@ export async function deleteBanner(id: string): Promise<ActionResult> {
     return { ok: true, id };
   } catch (e: any) {
     return { ok: false, error: e.message ?? "Failed to delete banner" };
+  }
+}
+
+// ---- Testimonials ----------------------------------------------------------
+
+export type TestimonialInput = {
+  customer_name: string;
+  location: string | null;
+  rating: number;
+  comment: string;
+};
+
+// PUBLIC — submitted from /leave-a-review. No staff check; writes via the
+// service role so the table stays locked to anon. Lands as 'pending' for
+// moderation before it can appear in the slideshow.
+export async function submitTestimonial(
+  input: TestimonialInput
+): Promise<ActionResult> {
+  try {
+    if (!input.customer_name?.trim()) {
+      return { ok: false, error: "Please enter your name." };
+    }
+    if (!input.comment?.trim()) {
+      return { ok: false, error: "Please write a short review." };
+    }
+    const rating = Math.round(Number(input.rating));
+    if (!(rating >= 1 && rating <= 5)) {
+      return { ok: false, error: "Please give a rating from 1 to 5 stars." };
+    }
+    const db = createSupabaseAdminClient();
+    const { data, error } = await db
+      .from("testimonials")
+      .insert({
+        customer_name: input.customer_name.trim(),
+        location: input.location?.trim() || null,
+        rating,
+        comment: input.comment.trim(),
+        approval_status: "pending",
+        source: "customer",
+      })
+      .select("id")
+      .single();
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/testimonials");
+    return { ok: true, id: data.id };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to submit review" };
+  }
+}
+
+export type AdminTestimonialInput = TestimonialInput & {
+  id?: string;
+  approval_status?: string; // pending | approved | rejected
+  sort?: number;
+  avatar_url?: string | null;
+};
+
+// STAFF — add or edit a testimonial. Admin-added ones default to approved.
+export async function saveTestimonial(
+  input: AdminTestimonialInput
+): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    if (!input.customer_name?.trim() || !input.comment?.trim()) {
+      return { ok: false, error: "Name and review text are required." };
+    }
+    const rating = Math.round(Number(input.rating));
+    if (!(rating >= 1 && rating <= 5)) {
+      return { ok: false, error: "Rating must be 1–5." };
+    }
+    const db = createSupabaseAdminClient();
+    const row = {
+      customer_name: input.customer_name.trim(),
+      location: input.location?.trim() || null,
+      rating,
+      comment: input.comment.trim(),
+      avatar_url: input.avatar_url?.trim() || null,
+      approval_status: input.approval_status ?? "approved",
+      sort: input.sort ?? 0,
+    };
+    let id = input.id;
+    if (id) {
+      const { error } = await db.from("testimonials").update(row).eq("id", id);
+      if (error) return { ok: false, error: error.message };
+    } else {
+      const { data, error } = await db
+        .from("testimonials")
+        .insert({ ...row, source: "admin" })
+        .select("id")
+        .single();
+      if (error) return { ok: false, error: error.message };
+      id = data.id;
+    }
+    revalidatePath("/admin/testimonials");
+    revalidatePath("/");
+    return { ok: true, id: id! };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to save testimonial" };
+  }
+}
+
+const TESTIMONIAL_STATUSES = ["pending", "approved", "rejected"];
+
+export async function setTestimonialStatus(
+  id: string,
+  status: string
+): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    if (!TESTIMONIAL_STATUSES.includes(status)) {
+      return { ok: false, error: "Invalid status" };
+    }
+    const db = createSupabaseAdminClient();
+    const { error } = await db
+      .from("testimonials")
+      .update({ approval_status: status })
+      .eq("id", id);
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/testimonials");
+    revalidatePath("/");
+    return { ok: true, id };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to update testimonial" };
+  }
+}
+
+export async function deleteTestimonial(id: string): Promise<ActionResult> {
+  try {
+    await assertStaff();
+    const db = createSupabaseAdminClient();
+    const { error } = await db.from("testimonials").delete().eq("id", id);
+    if (error) return { ok: false, error: error.message };
+    revalidatePath("/admin/testimonials");
+    revalidatePath("/");
+    return { ok: true, id };
+  } catch (e: any) {
+    return { ok: false, error: e.message ?? "Failed to delete testimonial" };
   }
 }

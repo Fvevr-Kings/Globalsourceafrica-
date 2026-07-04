@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { getProductBySlug } from "@/lib/products";
+import { getProductBySlug, getAllProducts } from "@/lib/products";
 import { localized } from "@/lib/i18n";
 import { QuoteRequestForm } from "@/components/QuoteRequestForm";
 
@@ -24,6 +24,13 @@ export default async function RequestQuotePage({
     : null;
   const initialType = searchParams.type === "sourcing" ? "sourcing" : "quote";
 
+  // All listed products power the "Get a quote" product dropdown.
+  const allProducts = await getAllProducts();
+  const productOptions = allProducts.map((p) => ({
+    id: p.id,
+    name: localized(p.name, p.name_i18n),
+  }));
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <Link href="/" className="inline-flex items-center gap-1 text-sm text-sub hover:text-ink">
@@ -42,6 +49,7 @@ export default async function RequestQuotePage({
           initialProductId={product?.id ?? null}
           initialProductName={product ? localized(product.name, product.name_i18n) : null}
           initialType={product ? "quote" : initialType}
+          products={productOptions}
         />
       </div>
     </div>

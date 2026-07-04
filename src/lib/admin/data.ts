@@ -108,9 +108,7 @@ export async function getAdminOrder(id: string) {
   const db = createSupabaseAdminClient();
   const { data, error } = await db
     .from("orders")
-    .select(
-      "id, status, currency, subtotal_usd, shipping_name, shipping_address, created_at, buyers(contact)"
-    )
+    .select("*, buyers(contact)")
     .eq("id", id)
     .maybeSingle();
   if (error) throw error;
@@ -161,6 +159,31 @@ export async function getAdminPost(id: string) {
     .maybeSingle();
   if (error) throw error;
   return data;
+}
+
+export async function listTestimonials() {
+  const db = createSupabaseAdminClient();
+  // select("*") stays resilient whether or not avatar_url (migration 0011) exists.
+  const { data, error } = await db
+    .from("testimonials")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+}
+
+// Resilient so the dashboard/nav never 500s if migration 0010 isn't applied yet.
+export async function getPendingTestimonialCount(): Promise<number> {
+  try {
+    const db = createSupabaseAdminClient();
+    const { count } = await db
+      .from("testimonials")
+      .select("id", { count: "exact", head: true })
+      .eq("approval_status", "pending");
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
 }
 
 export async function listQuotes() {

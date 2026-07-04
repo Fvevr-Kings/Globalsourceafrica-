@@ -65,7 +65,7 @@ export default async function AboutPage() {
 
       {/* CEO */}
       <section className="mt-6 flex flex-col items-center gap-6 rounded-2xl border border-greenLine bg-cream p-6 sm:flex-row sm:items-start">
-        <div className="shrink-0">
+        <div className="w-full sm:w-96 sm:shrink-0">
           <CeoPhoto />
         </div>
         <div>

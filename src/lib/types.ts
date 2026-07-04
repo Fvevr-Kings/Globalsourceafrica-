@@ -61,6 +61,18 @@ export type Order = {
   shipping_name: string | null;
   shipping_address: Record<string, unknown> | null;
   created_at: string;
+  tracking_note?: string | null;
+  status_updated_at?: string | null;
+};
+
+export type Testimonial = {
+  id: string;
+  customer_name: string;
+  location: string | null;
+  rating: number;
+  comment: string;
+  avatar_url?: string | null;
+  created_at: string;
 };
 
 export type OrderItem = {

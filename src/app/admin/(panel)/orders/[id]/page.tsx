@@ -33,7 +33,11 @@ export default async function AdminOrderPage({
             {buyerContact} · {new Date(order.created_at).toLocaleString()}
           </p>
         </div>
-        <OrderStatusControl orderId={order.id} status={order.status} />
+        <OrderStatusControl
+          orderId={order.id}
+          status={order.status}
+          note={(order as any).tracking_note ?? null}
+        />
       </div>
 
       <div className="mt-6 rounded-2xl border border-greenLine bg-white p-5">

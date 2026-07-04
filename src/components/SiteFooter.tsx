@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { TestimonialsSlideshow } from "./TestimonialsSlideshow";
 
 export function SiteFooter() {
   const pathname = usePathname();
@@ -10,6 +11,7 @@ export function SiteFooter() {
 
   return (
     <footer className="mt-16 border-t border-greenLine bg-white">
+      <TestimonialsSlideshow />
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-3 px-4 py-6">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -24,8 +26,14 @@ export function SiteFooter() {
           us — you pay the business, never a stranger.
         </p>
         <span className="flex flex-wrap gap-4">
+          <a href="/track" className="font-medium text-green hover:underline">
+            Track order
+          </a>
           <a href="/request-quote" className="font-medium text-green hover:underline">
             Request a quote
+          </a>
+          <a href="/leave-a-review" className="font-medium text-green hover:underline">
+            Leave a review
           </a>
           <a href="/become-a-supplier" className="font-medium text-green hover:underline">
             Become a supplier →

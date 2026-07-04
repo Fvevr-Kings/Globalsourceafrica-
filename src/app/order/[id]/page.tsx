@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CheckCircle2, ShieldCheck } from "lucide-react";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { formatPrice } from "@/lib/format";
+import { OrderTimeline } from "@/components/OrderTimeline";
 import type { Order, OrderItem } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +18,7 @@ export default async function OrderPage({
 
   const { data: order } = await supabase
     .from("orders")
-    .select(
-      "id, status, currency, subtotal_usd, shipping_name, shipping_address, created_at"
-    )
+    .select("*")
     .eq("id", params.id)
     .maybeSingle();
 
@@ -91,6 +90,25 @@ export default async function OrderPage({
             {formatPrice(typedOrder.subtotal_usd)}
           </span>
         </div>
+      </div>
+
+      <div className="mt-4 rounded-2xl border border-greenLine bg-white p-6">
+        <h2 className="font-display text-lg font-semibold text-ink">
+          Order status
+        </h2>
+        <div className="mt-4">
+          <OrderTimeline
+            status={typedOrder.status}
+            statusUpdatedAt={typedOrder.status_updated_at}
+            trackingNote={typedOrder.tracking_note}
+          />
+        </div>
+        <Link
+          href={`/track?order=${typedOrder.id.slice(0, 8)}`}
+          className="mt-4 inline-block text-sm font-medium text-green hover:underline"
+        >
+          Track this order anytime →
+        </Link>
       </div>
 
       {(typedOrder.shipping_name || address) && (

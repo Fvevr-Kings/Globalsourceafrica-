@@ -41,6 +41,19 @@
   animation: gsa-sheen 14s linear infinite alternate;
 }
 
+/* Testimonials marquee — a slow, continuous right-to-left ribbon. The track
+   holds two copies of the cards; translating by -50% loops seamlessly. */
+@keyframes gsa-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.gsa-marquee {
+  animation: gsa-marquee 60s linear infinite;
+}
+.gsa-marquee-group:hover .gsa-marquee {
+  animation-play-state: paused;
+}
+
 /* Respect prefers-reduced-motion (acceptance criteria). */
 @media (prefers-reduced-motion: reduce) {
   *,

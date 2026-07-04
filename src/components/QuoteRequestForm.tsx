@@ -4,19 +4,36 @@ import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 import { submitQuoteRequest } from "@/lib/quotes";
 
+type ProductOption = { id: string; name: string };
+
+// Preset volume ranges for the quantity dropdown; "Other" reveals a free field.
+const QUANTITY_OPTIONS = [
+  "Up to 100 kg",
+  "100–500 kg",
+  "500 kg – 1 tonne",
+  "1–5 tonnes",
+  "5–20 tonnes",
+  "20+ tonnes",
+];
+const OTHER = "__other__";
+
 export function QuoteRequestForm({
   initialProductId,
   initialProductName,
   initialType = "quote",
+  products = [],
 }: {
   initialProductId?: string | null;
   initialProductName?: string | null;
   initialType?: "quote" | "sourcing";
+  products?: ProductOption[];
 }) {
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [type, setType] = useState<"quote" | "sourcing">(initialType);
+  const [productId, setProductId] = useState<string | null>(initialProductId ?? null);
+  const [qtyChoice, setQtyChoice] = useState<string>("");
 
   const [f, setF] = useState({
     contact_name: "",
@@ -44,7 +61,7 @@ export function QuoteRequestForm({
       company: f.company.trim() || null,
       country: f.country.trim() || null,
       // A listed-product quote keeps the link; sourcing is free-text only.
-      product_id: type === "quote" ? initialProductId ?? null : null,
+      product_id: type === "quote" ? productId : null,
       product_name: f.product_name.trim() || null,
       quantity: f.quantity.trim() || null,
       target_price_usd: f.target_price_usd ? parseFloat(f.target_price_usd) : null,
@@ -91,11 +108,63 @@ export function QuoteRequestForm({
             <span className="text-sm font-medium text-ink">
               {type === "quote" ? "Product *" : "Product / commodity you need *"}
             </span>
-            <input value={f.product_name} onChange={(e) => set("product_name", e.target.value)} className={inputCls} required placeholder={type === "sourcing" ? "e.g. Dried ginger, Grade A" : ""} />
+            {type === "quote" && products.length > 0 ? (
+              <select
+                value={productId ?? ""}
+                onChange={(e) => {
+                  const id = e.target.value;
+                  const p = products.find((x) => x.id === id);
+                  setProductId(id || null);
+                  set("product_name", p?.name ?? "");
+                }}
+                className={inputCls}
+                required
+              >
+                <option value="">Select a product…</option>
+                {products.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                value={f.product_name}
+                onChange={(e) => set("product_name", e.target.value)}
+                className={inputCls}
+                required
+                placeholder={type === "sourcing" ? "e.g. Dried ginger, Grade A" : ""}
+              />
+            )}
           </label>
           <label className="block">
             <span className="text-sm font-medium text-ink">Quantity / volume</span>
-            <input value={f.quantity} onChange={(e) => set("quantity", e.target.value)} className={inputCls} placeholder="e.g. 20 tonnes, 100 x 5kg" />
+            <select
+              value={qtyChoice}
+              onChange={(e) => {
+                const v = e.target.value;
+                setQtyChoice(v);
+                // Keep the free-text value in sync; clear it when switching to "Other".
+                set("quantity", v === OTHER ? "" : v);
+              }}
+              className={inputCls}
+            >
+              <option value="">Select an estimated volume…</option>
+              {QUANTITY_OPTIONS.map((q) => (
+                <option key={q} value={q}>
+                  {q}
+                </option>
+              ))}
+              <option value={OTHER}>Other / specific amount…</option>
+            </select>
+            {qtyChoice === OTHER && (
+              <input
+                value={f.quantity}
+                onChange={(e) => set("quantity", e.target.value)}
+                className={`${inputCls} mt-2`}
+                placeholder="e.g. 12 tonnes, 250 x 5kg bags"
+              />
+            )}
           </label>
           <label className="block">
             <span className="text-sm font-medium text-ink">Target price (USD, optional)</span>
