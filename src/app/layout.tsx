@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Outfit, Inter, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "@/lib/cart";
-import { Header } from "@/components/Header";
-import { SiteFooter } from "@/components/SiteFooter";
+import { SiteNav } from "@/components/v2/SiteNav";
+import { SiteFooter } from "@/components/v2/SiteFooter";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
-import { ChatWidget } from "@/components/ChatWidget";
 
 // Clean, modern display font for the brand wordmark + headings.
 const display = Outfit({
@@ -42,13 +40,14 @@ const siteUrl =
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000");
 
-const SHARE_TAGLINE = "Connecting Africa's resources to the global market";
+const SHARE_TAGLINE =
+  "Your verification and sourcing partner on the ground in Africa";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "GlobalSource Africa — non-perishable African farm products",
+  title: "GlobalSource Africa — supplier verification & sourcing in Africa",
   description:
-    "Grains, pulses, nuts, dried spices, cocoa, coffee and shea from verified African origins. Sold and backed by GlobalSource Africa.",
+    "We help international buyers find, verify, inspect and manage African suppliers — before you send a single dollar. On-ground verification and sourcing, flat-fee reports.",
   openGraph: {
     type: "website",
     siteName: "GlobalSource Africa",
@@ -97,13 +96,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${inter.variable} ${heading.variable} ${mono.variable}`}>
       <body>
-        <CartProvider>
-          <Header />
-          <main>{children}</main>
-          <SiteFooter />
-        </CartProvider>
+        <SiteNav />
+        <main>{children}</main>
+        <SiteFooter />
         <ServiceWorkerRegister />
-        <ChatWidget />
       </body>
     </html>
   );
