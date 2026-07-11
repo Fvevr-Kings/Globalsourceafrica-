@@ -1,145 +1,90 @@
 import type { Metadata } from "next";
-import { Newspaper, CalendarDays } from "lucide-react";
-import { getPublishedPosts, type Post } from "@/lib/posts";
-import { CeoPhoto } from "@/components/CeoPhoto";
-
-export const dynamic = "force-dynamic";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { MonoLabel } from "@/components/v2/MonoLabel";
 
 export const metadata: Metadata = {
-  title: "About us — GlobalSource Africa",
+  title: "About — GlobalSource Africa",
   description:
-    "Our mission, our story, and the people behind GlobalSource Africa — connecting Africa's resources to the global market.",
+    "Who's on the ground, and where. GlobalSource Africa is a sourcing and verification service run by real people, in-country, who put their name to every report.",
 };
 
-function formatDate(iso: string | null) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return "";
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
-
-export default async function AboutPage() {
-  const posts = await getPublishedPosts();
-
+export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10">
-      {/* Mission / brand voice */}
-      <section className="text-center">
-        <p className="font-display text-sm font-semibold uppercase tracking-wide text-orange">
-          Who we are
-        </p>
-        <h1 className="mt-2 font-display text-3xl font-bold text-ink sm:text-4xl">
-          Connecting Africa&apos;s resources to the global market
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-sub">
-          GlobalSource Africa exists to bring the continent&apos;s finest farm
-          produce and raw materials to buyers around the world — transparently,
-          reliably, and at fair value. We stand behind every order as the
-          merchant of record, so you always buy from a business you can trust,
-          never a stranger.
-        </p>
-      </section>
-
-      {/* Mission + history cards */}
-      <section className="mt-10 grid gap-5 sm:grid-cols-2">
-        <div className="rounded-2xl border border-greenLine bg-white p-6">
-          <h2 className="font-display text-lg font-semibold text-green">Our mission</h2>
-          <p className="mt-2 text-sm leading-relaxed text-sub">
-            To open real, direct access between Africa&apos;s producers and the
-            world — championing verified quality, honest provenance, and lasting
-            relationships that lift the farmers and cooperatives behind every
-            harvest.
-          </p>
-        </div>
-        <div className="rounded-2xl border border-greenLine bg-white p-6">
-          <h2 className="font-display text-lg font-semibold text-green">Our story</h2>
-          <p className="mt-2 text-sm leading-relaxed text-sub">
-            We started with a simple frustration: Africa is rich in grains,
-            nuts, cocoa, coffee, shea and raw materials the world wants — yet
-            buyers struggled to source them with confidence. GlobalSource Africa
-            closes that gap, pairing rigorous quality checks with the trust of a
-            single business standing behind every shipment.
+    <>
+      <section className="gsa-corrugation bg-navy text-white">
+        <div className="mx-auto max-w-4xl px-4 py-20">
+          <MonoLabel className="text-container">ABOUT</MonoLabel>
+          <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
+            Trust services can&apos;t be anonymous
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-white/70">
+            GlobalSource Africa is a sourcing and verification service. We never
+            hold inventory and we never take title. We sell trust and ground
+            presence — your professional eyes and hands in Africa.
           </p>
         </div>
       </section>
 
-      {/* CEO */}
-      <section className="mt-6 flex flex-col items-center gap-6 rounded-2xl border border-greenLine bg-cream p-6 sm:flex-row sm:items-start">
-        <div className="w-full sm:w-96 sm:shrink-0">
-          <CeoPhoto />
-        </div>
-        <div>
-          <h2 className="font-display text-lg font-semibold text-ink">A note from our CEO</h2>
-          <p className="mt-2 text-sm italic leading-relaxed text-sub">
-            &ldquo;Every bag we ship carries the name and effort of an African
-            producer. We built GlobalSource Africa on four things — vision,
-            integrity, impact, and legacy — so that quality you can verify and a
-            partner you can count on come standard, order after order.&rdquo;
-          </p>
-          <p className="mt-3 text-sm font-semibold text-ink">Isreal Kingsley</p>
-          <p className="text-sm text-sub">
-            CEO, GlobalSource Africa · &ldquo;Building Africa. Supplying the World.&rdquo;
-          </p>
-        </div>
-      </section>
-
-      {/* Timeline */}
-      <section className="mt-14">
-        <h2 className="font-display text-2xl font-bold text-ink">News &amp; events</h2>
-        <p className="mt-1 text-sm text-sub">
-          A look at our recent dealings, deliveries, and milestones.
-        </p>
-
-        {posts.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-greenLine bg-white p-10 text-center text-sub">
-            No updates yet — check back soon.
+      <section className="bg-white">
+        <div className="mx-auto max-w-4xl px-4 py-16">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="rounded-2xl border border-steel/20 bg-paper p-6">
+              <h2 className="gsa-heading text-lg font-bold text-navy">Why we exist</h2>
+              <p className="mt-2 text-sm leading-relaxed text-steel">
+                International buyers get burned by fake exporters, forged
+                documents and shipments that never load. We put people on the
+                ground to make those risks checkable — before your money moves.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-steel/20 bg-paper p-6">
+              <h2 className="gsa-heading text-lg font-bold text-navy">How we work</h2>
+              <p className="mt-2 text-sm leading-relaxed text-steel">
+                Flat, published fees. Registry checks, license verification,
+                physical audits and accredited inspection. A decision-ready report,
+                or a verified supplier you can transact with confidently.
+              </p>
+            </div>
           </div>
-        ) : (
-          <ol className="mt-6 space-y-6">
-            {posts.map((p) => (
-              <PostCard key={p.id} post={p} />
-            ))}
-          </ol>
-        )}
-      </section>
-    </div>
-  );
-}
 
-function PostCard({ post }: { post: Post }) {
-  const dateLabel = formatDate(post.event_date) || formatDate(post.created_at);
-  const isEvent = post.kind === "event";
-  return (
-    <li className="overflow-hidden rounded-2xl border border-greenLine bg-white">
-      <div className="p-5">
-        <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-orange">
-          {isEvent ? <CalendarDays className="h-4 w-4" /> : <Newspaper className="h-4 w-4" />}
-          {isEvent ? "Event" : "News"}
-          {dateLabel && <span className="text-sub">· {dateLabel}</span>}
-        </div>
-        <h3 className="mt-2 font-display text-lg font-semibold text-ink">{post.title}</h3>
-        {post.body && (
-          <p className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-sub">{post.body}</p>
-        )}
-      </div>
-
-      {post.image_urls?.length > 0 && (
-        <div
-          className={`grid gap-1 ${
-            post.image_urls.length === 1 ? "grid-cols-1" : "grid-cols-2"
-          }`}
-        >
-          {post.image_urls.slice(0, 4).map((url, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
+          {/* Founder */}
+          <div className="mt-12 flex flex-col items-center gap-8 rounded-2xl border border-steel/20 bg-white p-8 sm:flex-row sm:items-start">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              key={i}
-              src={url}
-              alt={post.title}
-              className="h-56 w-full object-cover"
+              src="/ceo.jpg"
+              alt="Isreal Kingsley, founder of GlobalSource Africa"
+              className="h-44 w-44 shrink-0 rounded-2xl object-cover object-top"
             />
-          ))}
+            <div>
+              <MonoLabel className="text-steel">WHO&apos;S ON THE GROUND</MonoLabel>
+              <h2 className="gsa-heading mt-2 text-2xl font-bold text-navy">Isreal Kingsley</h2>
+              <p className="font-mono text-xs uppercase tracking-wider text-steel">
+                Founder · Accra / Kumasi, Ghana
+              </p>
+              <p className="mt-4 text-steel">
+                &ldquo;When we tell you a supplier checks out, we&apos;ve stood in front
+                of it. Every report carries our name — that&apos;s the whole point of a
+                verification business.&rdquo;
+              </p>
+            </div>
+          </div>
+
+          {/* Entity */}
+          <div className="mt-8 rounded-xl border border-steel/20 bg-paper p-6">
+            <MonoLabel className="text-steel">ENTITY</MonoLabel>
+            <p className="mt-2 text-sm text-navy/80">
+              GlobalSource Africa — registered trade services entity (Ghana).
+              <span className="font-mono text-xs uppercase tracking-wider text-steel"> · Registration details to be confirmed.</span>
+            </p>
+          </div>
+
+          <div className="mt-12 text-center">
+            <Link href="/request" className="inline-flex items-center gap-2 rounded-full bg-container px-6 py-3 font-semibold text-white hover:bg-container/90">
+              Work with us <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
-      )}
-    </li>
+      </section>
+    </>
   );
 }
