@@ -54,6 +54,24 @@
   animation-play-state: paused;
 }
 
+/* v2 industrial texture (PRD §3.2), used sparingly.
+   Corrugation: faint vertical steel lines like a container wall / section divider. */
+.gsa-corrugation {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(107, 118, 131, 0.09) 0px,
+    rgba(107, 118, 131, 0.09) 1px,
+    transparent 1px,
+    transparent 9px
+  );
+}
+/* Expanded, stencil-adjacent display treatment for v2 headings. */
+.gsa-heading {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-stretch: 125%;
+  letter-spacing: -0.01em;
+}
+
 /* Respect prefers-reduced-motion (acceptance criteria). */
 @media (prefers-reduced-motion: reduce) {
   *,

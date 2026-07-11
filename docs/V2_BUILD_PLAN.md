@@ -9,12 +9,18 @@ Source of truth for scope is [`globalsource-africa-v2-prd.md`](../globalsource-a
 - **Database:** new v2 schema **in the existing Supabase project** (v1 tables remain until we drop them).
 - **Hero tech:** react-three-fiber 3D on desktop + static WebP on mobile / reduced-motion.
 
-## Decisions still open (needed before Phase 2 copy / Phase 3)
+## Copy decisions (resolved this session)
 
-1. Footer entity line — Egypt entity, UK/US LLC, or both? (trust copy + payment rails)
-2. Founder visibility on `/about` — real name + photo (recommended) or brand-only?
-3. Published-fee currency — USD only (recommended) or USD + EGP?
-4. 3D asset source — rebrand a CC0 container GLB vs AI-generated livery texture. (Phase 3)
+- **Lead origin:** **Ghana** (placeholder — owner hasn't committed to Egypt yet), grounded in
+  real regions from v1: Ashanti (cocoa), Northern (shea), Bono (cashew). **Egypt listed as a
+  "next" expansion origin.** ⚠️ PRD is Egypt-first; we swap the lead to Ghana throughout copy
+  until the owner confirms. Entity/footer line = clearly-marked **Ghana placeholder**.
+- **Founder:** real name + photo — **Isreal Kingsley** + existing repo CEO photo.
+- **Fees:** **USD only.**
+
+## Decisions still open (Phase 3)
+
+- 3D asset source — rebrand a CC0 container GLB vs AI-generated livery texture.
 
 ## Stack additions
 

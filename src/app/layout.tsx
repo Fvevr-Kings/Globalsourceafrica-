@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Outfit, Inter, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/Header";
@@ -18,6 +18,22 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+});
+
+// v2 industrial display + "shipping manifest" mono (PRD §3.2). Archivo carries
+// the expanded/stencil-adjacent feel via weight + uppercase tracking in CSS.
+const heading = Archivo({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+  weight: ["600", "700", "800"],
+});
+
+const mono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 const siteUrl =
@@ -79,7 +95,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${inter.variable}`}>
+    <html lang="en" className={`${display.variable} ${inter.variable} ${heading.variable} ${mono.variable}`}>
       <body>
         <CartProvider>
           <Header />
