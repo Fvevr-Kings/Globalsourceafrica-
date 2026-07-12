@@ -72,53 +72,61 @@ function makePanel(w: number, h: number, branding: boolean): THREE.CanvasTexture
   return tex;
 }
 
-// Container mesh: barrel-rolls around its long axis (top rolls down to bottom —
-// "unrolling"), driven by hero-scroll `progress` plus a gentle idle roll.
-export function ContainerScene({ progress }: { progress: MutableRefObject<number> }) {
-  const group = useRef<THREE.Group>(null);
-  const idle = useRef(0);
-
-  const [sideTex, endTex] = useMemo(() => {
-    const L = 3.4, H = 1.5, D = 1.5;
-    return [makePanel(L, H, true), makePanel(D, H, false)];
-  }, []);
-
-  useFrame((_, delta) => {
-    if (!group.current) return;
-    idle.current += delta * 0.25;
-    const p = progress.current;
-    // Roll around the container's long (X) axis — top → bottom.
-    group.current.rotation.x = idle.current + p * Math.PI * 2;
-    group.current.position.y = p * 0.6;
-    group.current.scale.setScalar(1 - p * 0.12);
-  });
-
-  const matProps = { metalness: 0.7, roughness: 0.38 } as const;
-
+// Lights + in-scene studio environment (no external HDR). Shared by the
+// procedural fallback and the GLB model.
+export function SceneRig() {
   return (
     <>
       <ambientLight intensity={0.45} />
       <directionalLight position={[4, 6, 5]} intensity={2.0} color="#fff4ea" castShadow />
       <directionalLight position={[-5, 1, -2]} intensity={0.5} color="#9db8d6" />
-      {/* In-scene studio environment for metallic reflections (no external HDR). */}
       <Environment resolution={256}>
         <Lightformer intensity={2.2} position={[0, 3, 3]} scale={[8, 3, 1]} color="#fff2e6" />
         <Lightformer intensity={1.1} position={[-4, 1, -3]} scale={[5, 5, 1]} color="#a9c2df" />
         <Lightformer intensity={0.8} position={[4, -1, 2]} scale={[4, 4, 1]} color="#ffffff" />
       </Environment>
-
-      {/* slight fixed yaw so we see depth + the branded side while it rolls */}
-      <group ref={group} rotation={[0, -0.45, 0]}>
-        <mesh castShadow>
-          <boxGeometry args={[3.4, 1.5, 1.5]} />
-          <meshStandardMaterial attach="material-0" map={endTex} {...matProps} />
-          <meshStandardMaterial attach="material-1" map={endTex} {...matProps} />
-          <meshStandardMaterial attach="material-2" color={BODY_DARK} {...matProps} />
-          <meshStandardMaterial attach="material-3" color={BODY_DARK} {...matProps} />
-          <meshStandardMaterial attach="material-4" map={sideTex} {...matProps} />
-          <meshStandardMaterial attach="material-5" map={sideTex} {...matProps} />
-        </mesh>
-      </group>
     </>
+  );
+}
+
+// Shared roll: barrel-roll around the long axis (top → bottom, "unrolling"),
+// driven by hero-scroll `progress` plus a gentle idle roll.
+export function useRoll(
+  group: MutableRefObject<THREE.Group | null>,
+  progress: MutableRefObject<number>
+) {
+  const idle = useRef(0);
+  useFrame((_, delta) => {
+    if (!group.current) return;
+    idle.current += delta * 0.25;
+    const p = progress.current;
+    group.current.rotation.x = idle.current + p * Math.PI * 2;
+    group.current.position.y = p * 0.6;
+    group.current.scale.setScalar(1 - p * 0.12);
+  });
+}
+
+// Code-built container — the fallback until a photoreal GLB is dropped in.
+export function ProceduralContainer({ progress }: { progress: MutableRefObject<number> }) {
+  const group = useRef<THREE.Group>(null);
+  const [sideTex, endTex] = useMemo(() => {
+    const L = 3.4, H = 1.5, D = 1.5;
+    return [makePanel(L, H, true), makePanel(D, H, false)];
+  }, []);
+  useRoll(group, progress);
+  const matProps = { metalness: 0.7, roughness: 0.38 } as const;
+
+  return (
+    <group ref={group} rotation={[0, -0.45, 0]}>
+      <mesh castShadow>
+        <boxGeometry args={[3.4, 1.5, 1.5]} />
+        <meshStandardMaterial attach="material-0" map={endTex} {...matProps} />
+        <meshStandardMaterial attach="material-1" map={endTex} {...matProps} />
+        <meshStandardMaterial attach="material-2" color={BODY_DARK} {...matProps} />
+        <meshStandardMaterial attach="material-3" color={BODY_DARK} {...matProps} />
+        <meshStandardMaterial attach="material-4" map={sideTex} {...matProps} />
+        <meshStandardMaterial attach="material-5" map={sideTex} {...matProps} />
+      </mesh>
+    </group>
   );
 }
