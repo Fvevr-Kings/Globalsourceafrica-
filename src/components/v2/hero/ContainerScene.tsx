@@ -90,17 +90,16 @@ export function SceneRig() {
 }
 
 // Shared roll: barrel-roll around the long axis (top → bottom, "unrolling"),
-// driven by hero-scroll `progress` plus a gentle idle roll.
+// driven PURELY by scroll progress — the container stops when scrolling stops
+// (ScrollTrigger's scrub eases it to rest; no idle spin).
 export function useRoll(
   group: MutableRefObject<THREE.Group | null>,
   progress: MutableRefObject<number>
 ) {
-  const idle = useRef(0);
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (!group.current) return;
-    idle.current += delta * 0.25;
     const p = progress.current;
-    group.current.rotation.x = idle.current + p * Math.PI * 2;
+    group.current.rotation.x = p * Math.PI * 2;
     group.current.position.y = p * 0.6;
     group.current.scale.setScalar(1 - p * 0.12);
   });
