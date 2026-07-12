@@ -67,7 +67,8 @@ export function ContainerHero3D() {
         // poseGroup, not the camera. Keyed so the create-only camera re-applies
         // when the breakpoint resolves; phones sit closer to fill the frame.
         key={mobile ? "mobile" : "desktop"}
-        camera={{ position: mobile ? [2.9, 1.45, 2.9] : [3.0, 1.5, 3.0], fov: 42 }}
+        // Wider FOV = stronger perspective so 3 faces read as a solid cube.
+        camera={{ position: mobile ? [2.9, 1.45, 2.9] : [3.0, 1.5, 3.0], fov: 50 }}
         onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
         dpr={mobile ? [1, 1.5] : [1, 2]}
         gl={{ antialias: !mobile, alpha: true, powerPreference: "high-performance" }}

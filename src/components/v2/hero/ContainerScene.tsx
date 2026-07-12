@@ -97,6 +97,12 @@ export function SceneRig() {
 //   z:  0.55 lifts the left end, drops the right end (the diagonal)
 export const POSE: [number, number, number] = [-0.3, 0.35, 0.55];
 
+// Resting roll offset so at scroll 0 the container sits on a CORNER — the
+// underside/bottom face peeks toward the camera alongside the top + long side,
+// giving a solid 3-face cube look instead of a flat card. Flip the sign to
+// show the opposite corner.
+export const ROLL_REST = -0.6;
+
 // Scroll roll: ONLY rollGroup.rotation.x (the container's LONG axis — length
 // lies along local X inside the roll group). Nested inside the tilted
 // poseGroup, this local-X roll spins it in place like a rolling pin on the
@@ -107,8 +113,8 @@ export function useLongRoll(
 ) {
   useFrame(() => {
     if (!rollGroup.current) return;
-    // scroll down = roll forward; negate if the direction ever feels wrong
-    rollGroup.current.rotation.x = progress.current * Math.PI * 2;
+    // rest on a corner, then roll forward with scroll
+    rollGroup.current.rotation.x = ROLL_REST + progress.current * Math.PI * 2;
   });
 }
 
