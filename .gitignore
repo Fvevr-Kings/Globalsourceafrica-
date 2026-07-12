@@ -19,3 +19,4 @@ client_secret_*.json
 
 # Heavy source video for the banner; only the optimized /public/banner.mp4 ships
 /public/banner-src.mp4
+/assets-src-models/

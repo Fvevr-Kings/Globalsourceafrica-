@@ -36,11 +36,14 @@ export function ContainerModel({ progress }: { progress: MutableRefObject<number
 
   useRoll(group, progress);
 
-  // Fixed yaw so the branded side shows while it rolls. If a given model's long
-  // axis isn't X, adjust this rotation offset.
+  // Outer group barrel-rolls around world-X (useRoll → rotation.x). This model's
+  // long axis is Z, so the inner group yaws 90° to lay the length horizontal —
+  // then the X-roll spins it around its length ("unrolling"), shown broadside.
   return (
-    <group ref={group} rotation={[0, -0.45, 0]}>
-      <primitive object={model} />
+    <group ref={group}>
+      <group rotation={[0, Math.PI / 2, 0]}>
+        <primitive object={model} />
+      </group>
     </group>
   );
 }
