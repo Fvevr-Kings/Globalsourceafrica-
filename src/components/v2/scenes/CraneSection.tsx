@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MonoLabel } from "../MonoLabel";
-import { ContainerArt, TruckArt } from "./art";
+import { SceneImg } from "./SceneImg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,42 +18,16 @@ const STEPS = [
   { n: "05", t: "You receive the report / verified deal", d: "A decision-ready document, or a supplier you can transact with confidently." },
 ];
 
-// PRD §4.2 — crane-suspended container lowers + sways as the section enters;
-// the 5 steps reveal in sequence; the truck is DRIVEN BY SCROLL from off-screen
-// left to its parked spot, wheels rolling. Reduced-motion: static rest state.
+// How It Works — 5 steps reveal in sequence, then a REAL truck image drives
+// across the section as you scroll (PRD §4.2, LogiCart-style delight). Uses a
+// transparent PNG at /scenes/truck.png. Reduced-motion: static.
 export function CraneSection() {
   const section = useRef<HTMLElement>(null);
-  const craneBox = useRef<SVGGElement>(null);
   const truckWrap = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => {
-      // Container lowers on its cables as the section scrolls in.
-      gsap.from(craneBox.current, {
-        y: -40,
-        scrollTrigger: {
-          trigger: section.current,
-          start: "top 85%",
-          end: "top 30%",
-          scrub: 0.8,
-        },
-      });
-
-      // Gentle sway while on screen (paused off-screen for perf).
-      const sway = gsap.fromTo(
-        craneBox.current,
-        { rotation: -1.5, transformOrigin: "50% 0%" },
-        { rotation: 1.5, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1, paused: true }
-      );
-      ScrollTrigger.create({
-        trigger: section.current,
-        start: "top bottom",
-        end: "bottom top",
-        onToggle: (self) => (self.isActive ? sway.play() : sway.pause()),
-      });
-
-      // Steps reveal sequentially, each at its own scroll position.
       gsap.utils.toArray<HTMLElement>(".gsa-step").forEach((el, i) => {
         gsap.from(el, {
           opacity: 0,
@@ -64,19 +38,20 @@ export function CraneSection() {
         });
       });
 
-      // The user drives the truck in by scrolling (scrubbed), wheels rolling.
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: truckWrap.current,
-          start: "top 95%",
-          end: "top 45%",
-          scrub: 1,
-        },
-      });
-      tl.from(truckWrap.current, { xPercent: -130, ease: "none" }, 0).from(
-        ".gsa-wheel",
-        { rotation: -720, ease: "none" },
-        0
+      // The user drives the truck across by scrolling (scrubbed).
+      gsap.fromTo(
+        truckWrap.current,
+        { xPercent: -120 },
+        {
+          xPercent: 8,
+          ease: "none",
+          scrollTrigger: {
+            trigger: truckWrap.current,
+            start: "top 92%",
+            end: "top 40%",
+            scrub: 1,
+          },
+        }
       );
     }, section);
     return () => ctx.revert();
@@ -90,25 +65,6 @@ export function CraneSection() {
           <h2 className="gsa-heading mt-3 text-3xl font-bold text-navy sm:text-4xl">
             From request to verified deal
           </h2>
-        </div>
-
-        {/* Crane + hanging container */}
-        <div className="mt-10 flex justify-center">
-          <svg viewBox="0 0 480 330" className="w-full max-w-md" aria-hidden>
-            {/* gantry beam + trolley */}
-            <rect x="0" y="10" width="480" height="14" fill="#1c242e" />
-            <rect x="200" y="24" width="80" height="14" rx="2" fill="#16202b" />
-            <circle cx="240" cy="38" r="5" fill="#E8622C" />
-            {/* hanging group: cables + spreader + container */}
-            <g ref={craneBox}>
-              <line x1="140" y1="-160" x2="140" y2="152" stroke="#6B7683" strokeWidth="2.5" />
-              <line x1="340" y1="-160" x2="340" y2="152" stroke="#6B7683" strokeWidth="2.5" />
-              <rect x="128" y="142" width="224" height="8" rx="2" fill="#16202b" />
-              <g transform="translate(90,150)">
-                <ContainerArt />
-              </g>
-            </g>
-          </svg>
         </div>
 
         {/* Steps with dotted connector */}
@@ -130,18 +86,21 @@ export function CraneSection() {
           </ol>
         </div>
 
-        {/* Scroll-driven truck */}
-        <div className="mt-14">
-          <div ref={truckWrap} className="mx-auto max-w-2xl">
-            <svg viewBox="0 0 620 200" className="w-full" aria-hidden>
-              <TruckArt withContainer />
-              {/* road line */}
-              <rect x="-40" y="184" width="700" height="4" rx="2" fill="#6B7683" opacity="0.35" />
-            </svg>
+        {/* Real truck drives across on scroll */}
+        <div className="relative mt-16 h-40 sm:h-52">
+          <div ref={truckWrap} className="absolute bottom-6 left-0 w-[62%] max-w-md sm:w-[46%]">
+            <SceneImg
+              src="/scenes/truck.png"
+              alt="GlobalSource Africa delivery truck"
+              className="h-auto w-full drop-shadow-xl"
+              label="DROP: /public/scenes/truck.png — side-view cargo truck, transparent, facing right"
+            />
           </div>
+          {/* road */}
+          <div className="absolute bottom-4 left-0 right-0 h-0.5 bg-steel/25" />
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <Link
             href="/how-it-works"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-container hover:gap-2.5"

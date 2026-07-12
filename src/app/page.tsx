@@ -49,7 +49,7 @@ export default function HomePage() {
           <TrustStrip className="mt-8 justify-center text-steel" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
 
           {/* Container under the headline — consistent across breakpoints */}
-          <div className="mt-6 w-full max-w-xl lg:max-w-3xl">
+          <div className="mt-6 w-full max-w-xl lg:max-w-5xl">
             <HeroVisual />
           </div>
         </div>
