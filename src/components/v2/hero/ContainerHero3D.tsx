@@ -1,6 +1,6 @@
 "use client";
 
-import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from "react";
+import { Component, Suspense, useEffect, useRef, type ReactNode } from "react";
 import { Canvas } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -28,20 +28,6 @@ class ModelErrorBoundary extends Component<
 export function ContainerHero3D() {
   const progress = useRef(0);
   const wrap = useRef<HTMLDivElement>(null);
-  const [hasGlb, setHasGlb] = useState(false);
-
-  // Detect the model at runtime so dropping it in "just works", no code change.
-  useEffect(() => {
-    let alive = true;
-    fetch("/models/container.glb", { method: "HEAD" })
-      .then((r) => {
-        if (alive) setHasGlb(r.ok);
-      })
-      .catch(() => {});
-    return () => {
-      alive = false;
-    };
-  }, []);
 
   useEffect(() => {
     const el = wrap.current;
@@ -70,15 +56,11 @@ export function ContainerHero3D() {
         frameloop="always"
       >
         <SceneRig />
-        <Suspense fallback={fallback}>
-          {hasGlb ? (
-            <ModelErrorBoundary fallback={fallback}>
-              <ContainerModel progress={progress} />
-            </ModelErrorBoundary>
-          ) : (
-            fallback
-          )}
-        </Suspense>
+        <ModelErrorBoundary fallback={fallback}>
+          <Suspense fallback={fallback}>
+            <ContainerModel progress={progress} />
+          </Suspense>
+        </ModelErrorBoundary>
       </Canvas>
     </div>
   );

@@ -17,14 +17,13 @@ export function ContainerModel({ progress }: { progress: MutableRefObject<number
 
   const model = useMemo(() => {
     const s = scene.clone(true);
-    const box = new THREE.Box3().setFromObject(s);
-    const size = new THREE.Vector3();
-    const center = new THREE.Vector3();
-    box.getSize(size);
-    box.getCenter(center);
-    s.position.sub(center); // center at origin
-    const scale = 3.4 / Math.max(size.x, size.y, size.z, 0.001);
+    // normalize size first…
+    const size = new THREE.Box3().setFromObject(s).getSize(new THREE.Vector3());
+    const scale = 3.2 / Math.max(size.x, size.y, size.z, 0.001);
     s.scale.setScalar(scale);
+    // …then recenter using the SCALED bounds so it sits at the origin.
+    const center = new THREE.Box3().setFromObject(s).getCenter(new THREE.Vector3());
+    s.position.sub(center);
     s.traverse((o) => {
       if ((o as THREE.Mesh).isMesh) {
         o.castShadow = true;
