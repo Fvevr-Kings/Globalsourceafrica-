@@ -4,21 +4,28 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { HeroContainerStatic } from "../HeroContainerStatic";
 
-// 3D canvas is desktop + motion only, and never on the server bundle.
+// 3D canvas never joins the server bundle; static shows while it loads.
 const ContainerHero3D = dynamic(
   () => import("./ContainerHero3D").then((m) => m.ContainerHero3D),
   { ssr: false, loading: () => <HeroContainerStatic /> }
 );
 
-// Decides between the real 3D spinning container (desktop, motion allowed) and
-// the static livery render (mobile / reduced-motion) — PRD §4.1.
+// The real spinning container runs on ALL devices (most visitors are mobile).
+// Static fallback only for prefers-reduced-motion or missing WebGL.
 export function HeroVisual() {
   const [mode, setMode] = useState<"static" | "3d">("static");
 
   useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1024px)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setMode(desktop && !reduced ? "3d" : "static");
+    const webgl = (() => {
+      try {
+        const c = document.createElement("canvas");
+        return !!(c.getContext("webgl2") || c.getContext("webgl"));
+      } catch {
+        return false;
+      }
+    })();
+    setMode(!reduced && webgl ? "3d" : "static");
   }, []);
 
   return mode === "3d" ? <ContainerHero3D /> : <HeroContainerStatic />;
