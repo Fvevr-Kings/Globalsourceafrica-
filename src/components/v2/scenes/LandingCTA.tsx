@@ -38,9 +38,9 @@ export function LandingCTA() {
         <div className="mx-auto mt-12 w-full max-w-4xl">
           <SceneImg
             src="/scenes/landing.webp"
-            alt="GlobalSource Africa — container delivered onto the truck"
-            className="mx-auto h-auto w-full"
-            label="DROP: /public/scenes/landing.(png/webp) — closing still image"
+            alt="GlobalSource Africa branded truck at the container yard"
+            className="mx-auto h-auto w-full rounded-2xl shadow-2xl shadow-black/40 ring-1 ring-white/10"
+            label="MISSING: /public/scenes/landing.webp"
           />
         </div>
       </div>
