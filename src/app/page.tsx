@@ -50,7 +50,7 @@ export default function HomePage() {
 
           {/* Container under the headline — fixed pose rolls in place, so the
               column stays tight instead of reserving sweep room */}
-          <div className="mt-6 w-full max-w-md sm:max-w-lg lg:max-w-2xl">
+          <div className="mt-6 w-full max-w-md sm:max-w-lg lg:max-w-3xl">
             <HeroVisual />
           </div>
         </div>

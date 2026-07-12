@@ -28,15 +28,15 @@ export function LandingCTA() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: band.current,
-          start: "top 85%",
-          end: "bottom 98%",
+          start: "top 78%",
+          end: "bottom bottom",
           scrub: 1.2,
         },
       });
 
-      // Descent (0 → 0.75): starts just above the scene so the crane container
-      // is VISIBLE the whole way down — fast early, feathered final metres.
-      tl.from(box.current, { yPercent: -115, ease: "power3.out", duration: 0.75 }, 0);
+      // Descent (0 → 0.75): starts only ~55% of its height above the bed, so the
+      // crane container is IN VIEW right after the heading and never off-screen.
+      tl.from(box.current, { yPercent: -55, ease: "power3.out", duration: 0.75 }, 0);
       // Touchdown (0.75): settle bounce + suspension dip.
       tl.to(box.current, { y: 5, duration: 0.07, ease: "power2.in" }, 0.75)
         .to(box.current, { y: 0, duration: 0.08, ease: "power2.out" }, 0.82)
@@ -87,12 +87,12 @@ export function LandingCTA() {
             />
           </div>
 
-          {/* descending container — the image carries its own crane spreader;
-              one hoist line continues from its top up out of the scene. Biased
-              over the (now left-facing) bed, clear of the tractor wheels. */}
-          <div ref={box} className="absolute bottom-[78px] left-1/2 w-[44%] max-w-sm -translate-x-[38%]">
+          {/* descending container — the image carries its own crane spreader,
+              so only a SHORT hoist line continues up from it. Raised onto the
+              bed deck and biased over the (left-facing) flatbed. */}
+          <div ref={box} className="absolute bottom-[104px] left-1/2 w-[44%] max-w-sm -translate-x-[40%]">
             <div ref={cables}>
-              <span className="absolute bottom-full left-1/2 h-[420px] w-0.5 -translate-x-1/2 bg-steel/60" />
+              <span className="absolute bottom-full left-1/2 h-10 w-0.5 -translate-x-1/2 bg-steel/50" />
             </div>
             <SceneImg
               src="/scenes/container.webp"

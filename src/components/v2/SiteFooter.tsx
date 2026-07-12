@@ -15,12 +15,16 @@ export function SiteFooter() {
     <footer className="gsa-corrugation border-t border-white/10 bg-navy text-white/80">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <div className="flex items-baseline gap-2">
-            <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-white">
-              GlobalSource
-            </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
-              Africa
+          <div className="flex items-center gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icons/main_logo.png" alt="GlobalSource Africa" className="h-10 w-auto" />
+            <span className="flex items-baseline gap-2">
+              <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-white">
+                GlobalSource
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
+                Africa
+              </span>
             </span>
           </div>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/60">

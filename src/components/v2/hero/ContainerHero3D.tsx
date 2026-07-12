@@ -58,17 +58,16 @@ export function ContainerHero3D() {
   const fallback = <ProceduralContainer progress={progress} />;
 
   return (
-    <div ref={wrap} className="h-[280px] w-full sm:h-[360px] lg:h-[440px]">
+    // -scale-x-100 mirrors the render horizontally: raised end to the LEFT and
+    // the branding reads forward. Taller on desktop per request.
+    <div ref={wrap} className="h-[280px] w-full -scale-x-100 sm:h-[380px] lg:h-[500px]">
       <Canvas
-        // Slightly above and back on the [4,3,6] sightline (scaled so the
-        // container stays large), looking at the origin — a straight-on camera
-        // would flatten the 3/4 tilt. Keyed so the create-only camera re-applies
-        // when the breakpoint resolves; phones sit closer to fill the frame.
-        key={mobile ? "mobile" : "desktop"}
         // Slightly elevated 3/4 seat on the [5,2.5,5] sightline (scaled close so
         // the container reads large). Never animated — the pose lives on the
-        // poseGroup, not the camera.
-        camera={{ position: mobile ? [2.9, 1.45, 2.9] : [3.3, 1.65, 3.3], fov: 42 }}
+        // poseGroup, not the camera. Keyed so the create-only camera re-applies
+        // when the breakpoint resolves; phones sit closer to fill the frame.
+        key={mobile ? "mobile" : "desktop"}
+        camera={{ position: mobile ? [2.9, 1.45, 2.9] : [3.0, 1.5, 3.0], fov: 42 }}
         onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
         dpr={mobile ? [1, 1.5] : [1, 2]}
         gl={{ antialias: !mobile, alpha: true, powerPreference: "high-performance" }}

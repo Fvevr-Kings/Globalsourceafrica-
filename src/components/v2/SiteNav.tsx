@@ -23,12 +23,16 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-steel/15 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
-        <Link href="/" className="flex items-baseline gap-2" onClick={() => setOpen(false)}>
-          <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-navy">
-            GlobalSource
-          </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
-            Africa
+        <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icons/main_logo.png" alt="GlobalSource Africa" className="h-9 w-auto" />
+          <span className="flex items-baseline gap-2">
+            <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-navy">
+              GlobalSource
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
+              Africa
+            </span>
           </span>
         </Link>
 
