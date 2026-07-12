@@ -89,9 +89,14 @@ export function SceneRig() {
   );
 }
 
-// Shared roll: barrel-roll around the long axis (top → bottom, "unrolling"),
-// driven PURELY by scroll progress — the container stops when scrolling stops
-// (ScrollTrigger's scrub eases it to rest; no idle spin).
+// Base 3/4 tilt (Bankar reference): tip forward so the top face shows, and roll
+// onto a corner so a long side AND an end (corner castings) read at once. Set
+// ONCE on the group's rotation prop — never touched by the scroll handler.
+export const BASE_TILT: [number, number, number] = [-0.35, 0, 0.45];
+
+// Scroll spin: ONLY rotation.y is driven by progress (0 → 2π) — the tilted
+// object turns on its own vertical axis like a rotisserie; the tilt persists.
+// Stops when scrolling stops (scrub eases it to rest; no idle spin).
 export function useRoll(
   group: MutableRefObject<THREE.Group | null>,
   progress: MutableRefObject<number>
@@ -99,7 +104,7 @@ export function useRoll(
   useFrame(() => {
     if (!group.current) return;
     const p = progress.current;
-    group.current.rotation.x = p * Math.PI * 2;
+    group.current.rotation.y = p * Math.PI * 2; // x/z tilt untouched
     group.current.position.y = p * 0.6;
     group.current.scale.setScalar(1 - p * 0.12);
   });
@@ -116,7 +121,7 @@ export function ProceduralContainer({ progress }: { progress: MutableRefObject<n
   const matProps = { metalness: 0.7, roughness: 0.38 } as const;
 
   return (
-    <group ref={group} rotation={[0, -0.45, 0]}>
+    <group ref={group} rotation={BASE_TILT}>
       <mesh castShadow>
         <boxGeometry args={[3.4, 1.5, 1.5]} />
         <meshStandardMaterial attach="material-0" map={endTex} {...matProps} />

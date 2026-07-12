@@ -60,10 +60,13 @@ export function ContainerHero3D() {
   return (
     <div ref={wrap} className="h-[320px] w-full sm:h-[440px] lg:h-[560px]">
       <Canvas
-        // Closer camera on phones so the container fills the frame. Keyed so the
-        // camera re-applies when the breakpoint resolves (camera is create-only).
+        // Slightly above and back on the [4,3,6] sightline (scaled so the
+        // container stays large), looking at the origin — a straight-on camera
+        // would flatten the 3/4 tilt. Keyed so the create-only camera re-applies
+        // when the breakpoint resolves; phones sit closer to fill the frame.
         key={mobile ? "mobile" : "desktop"}
-        camera={{ position: [0, 0, mobile ? 4.4 : 4.2], fov: 42 }}
+        camera={{ position: mobile ? [2.4, 1.8, 3.6] : [2.7, 2.0, 4.0], fov: 42 }}
+        onCreated={({ camera }) => camera.lookAt(0, 0, 0)}
         dpr={mobile ? [1, 1.5] : [1, 2]}
         gl={{ antialias: !mobile, alpha: true, powerPreference: "high-performance" }}
         frameloop="always"

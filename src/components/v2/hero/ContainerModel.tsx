@@ -3,7 +3,7 @@
 import { useMemo, useRef, type MutableRefObject } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { useRoll } from "./ContainerScene";
+import { useRoll, BASE_TILT } from "./ContainerScene";
 
 const MODEL_URL = "/models/container.glb";
 const ORANGE = "#E8622C";
@@ -80,11 +80,11 @@ export function ContainerModel({ progress }: { progress: MutableRefObject<number
   const decalH = decalW * (256 / 1024);
   const sideX = dims.x / 2 + 0.015;
 
-  // Outer group barrel-rolls around world-X (useRoll → rotation.x). This model's
-  // long axis is Z, so the inner group yaws 90° to lay the length horizontal —
-  // then the X-roll spins it around its length ("unrolling"), shown broadside.
+  // Outer group carries the FIXED 3/4 tilt (set once via BASE_TILT — the scroll
+  // loop only mutates rotation.y, so the tilt persists through the whole spin).
+  // Inner group yaws 90° to lay this model's Z-length horizontal, broadside.
   return (
-    <group ref={group}>
+    <group ref={group} rotation={BASE_TILT}>
       <group rotation={[0, Math.PI / 2, 0]}>
         <primitive object={model} />
         <mesh position={[sideX, dims.y * 0.06, 0]} rotation={[0, Math.PI / 2, 0]}>
