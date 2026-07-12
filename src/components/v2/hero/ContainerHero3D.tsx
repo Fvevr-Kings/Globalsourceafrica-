@@ -58,12 +58,12 @@ export function ContainerHero3D() {
   const fallback = <ProceduralContainer progress={progress} />;
 
   return (
-    <div ref={wrap} className="h-[300px] w-full sm:h-[380px] lg:h-[420px]">
+    <div ref={wrap} className="h-[300px] w-full sm:h-[380px] lg:h-[460px]">
       <Canvas
         // Closer camera on phones so the container fills the frame. Keyed so the
         // camera re-applies when the breakpoint resolves (camera is create-only).
         key={mobile ? "mobile" : "desktop"}
-        camera={{ position: [0, 0, mobile ? 4.6 : 6], fov: 40 }}
+        camera={{ position: [0, 0, mobile ? 4.6 : 5.2], fov: 40 }}
         dpr={mobile ? [1, 1.5] : [1, 2]}
         gl={{ antialias: !mobile, alpha: true, powerPreference: "high-performance" }}
         frameloop="always"

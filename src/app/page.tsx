@@ -1,22 +1,16 @@
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, FileSearch, ClipboardCheck, Truck, PackageCheck, MapPin } from "lucide-react";
+import { ArrowRight, ShieldCheck, MapPin } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
 import { TrustStrip } from "@/components/v2/TrustStrip";
 import { HeroVisual } from "@/components/v2/hero/HeroVisual";
 import { ServiceCard } from "@/components/v2/ServiceCard";
+import { CraneSection } from "@/components/v2/scenes/CraneSection";
+import { LandingCTA } from "@/components/v2/scenes/LandingCTA";
 import { SERVICES } from "@/lib/v2/services";
 
 export const metadata = {
   title: "GlobalSource Africa — supplier verification & sourcing in Africa",
 };
-
-const STEPS = [
-  { n: "01", t: "Submit your request", d: "Tell us the product, quantity, destination and specs — or name a supplier you want checked." },
-  { n: "02", t: "We scope and quote our fee", d: "Flat fee confirmed upfront. You know the cost before anything starts." },
-  { n: "03", t: "Ground work begins", d: "Registry checks, license verification, physical or video audit, reference calls." },
-  { n: "04", t: "Inspection coordinated", d: "SGS or equivalent at sampling and loading. You never ship blind." },
-  { n: "05", t: "You receive the report / verified deal", d: "A decision-ready document, or a supplier you can transact with confidently." },
-];
 
 const REGIONS = [
   { name: "Ashanti", note: "Cocoa · processing & export" },
@@ -33,37 +27,30 @@ const ARTICLES = [
 export default function HomePage() {
   return (
     <>
-      {/* 1 · HERO (white, container centered on mobile / right on desktop) */}
+      {/* 1 · HERO — single column on every screen: H1 on top, container below */}
       <section className="gsa-corrugation relative overflow-hidden bg-white text-navy">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:py-24">
-          <div className="text-center lg:text-left">
-            <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>
-            <h1 className="gsa-heading mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
-              Your verification and sourcing partner on the ground in Africa
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-steel lg:mx-0">
-              We help international buyers find, verify and buy from African
-              suppliers safely — before you send a single dollar.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-              <Link href="/request" className="inline-flex items-center gap-2 rounded-full bg-container px-6 py-3 font-semibold text-white transition-colors hover:bg-container/90">
-                Request Sourcing <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/services/verification" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-semibold text-navy transition-colors hover:bg-paper">
-                <ShieldCheck className="h-4 w-4" /> Verify a Supplier
-              </Link>
-            </div>
-            <TrustStrip className="mt-10 justify-center text-steel lg:justify-start" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
+        <div className="mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-16 text-center lg:pt-20">
+          <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>
+          <h1 className="gsa-heading mt-5 max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
+            Your verification and sourcing partner on the ground in Africa
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-steel">
+            We help international buyers find, verify and buy from African
+            suppliers safely — before you send a single dollar.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/request" className="inline-flex items-center gap-2 rounded-full bg-container px-6 py-3 font-semibold text-white transition-colors hover:bg-container/90">
+              Request Sourcing <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link href="/services/verification" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-semibold text-navy transition-colors hover:bg-paper">
+              <ShieldCheck className="h-4 w-4" /> Verify a Supplier
+            </Link>
           </div>
+          <TrustStrip className="mt-8 justify-center text-steel" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
 
-          {/* Container visual — centered on mobile, right on desktop, with 360° badge */}
-          <div className="relative flex justify-center">
-            <span className="absolute left-2 top-6 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-container font-mono text-xs font-bold text-white shadow-lg sm:left-6">
-              360°
-            </span>
-            <div className="w-full max-w-lg">
-              <HeroVisual />
-            </div>
+          {/* Container under the headline — consistent across breakpoints */}
+          <div className="mt-6 w-full max-w-xl lg:max-w-3xl">
+            <HeroVisual />
           </div>
         </div>
       </section>
@@ -104,33 +91,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4 · HOW IT WORKS (static; motion in Phase 3) */}
-      <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-7xl px-4 py-20">
-          <MonoLabel className="text-container">HOW IT WORKS</MonoLabel>
-          <h2 className="gsa-heading mt-3 text-3xl font-bold sm:text-4xl">
-            From request to verified deal
-          </h2>
-          <ol className="mt-10 grid gap-6 md:grid-cols-5">
-            {STEPS.map((s, i) => {
-              const Icon = [FileSearch, ClipboardCheck, ShieldCheck, Truck, PackageCheck][i];
-              return (
-                <li key={s.n} className="relative rounded-xl border border-white/10 bg-white/[0.03] p-5">
-                  <div className="flex items-center gap-2 text-container">
-                    <Icon className="h-5 w-5" />
-                    <span className="font-mono text-xs tracking-widest">{s.n}</span>
-                  </div>
-                  <h3 className="mt-3 text-sm font-semibold">{s.t}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-white/60">{s.d}</p>
-                </li>
-              );
-            })}
-          </ol>
-          <Link href="/how-it-works" className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-container hover:gap-2.5">
-            See the full process <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </section>
+      {/* 4 · HOW IT WORKS — crane + scroll-driven truck set piece (PRD §4.2) */}
+      <CraneSection />
 
       {/* 5 · SAMPLE REPORT TEASER */}
       <section className="bg-paper">
@@ -263,25 +225,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 9 · CTA BAND (static; landing animation in Phase 3) */}
-      <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-24 text-center">
-          <h2 className="gsa-heading text-3xl font-extrabold sm:text-4xl lg:text-5xl">
-            Ready to source from Africa without the risk?
-          </h2>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/services/verification" className="rounded-full bg-container px-6 py-3 font-semibold text-white hover:bg-container/90">
-              Verify a Supplier — from $400
-            </Link>
-            <Link href="/request" className="rounded-full border border-white/25 px-6 py-3 font-semibold text-white hover:bg-white/5">
-              Talk to a Sourcing Specialist
-            </Link>
-          </div>
-          <MonoLabel as="p" className="mt-6 text-center text-white/50">
-            RESPONSE WITHIN 48 HOURS · ACCRA, GHANA (GMT)
-          </MonoLabel>
-        </div>
-      </section>
+      {/* 9 · CTA BAND — container lands on the waiting trailer (PRD §4.3) */}
+      <LandingCTA />
     </>
   );
 }
