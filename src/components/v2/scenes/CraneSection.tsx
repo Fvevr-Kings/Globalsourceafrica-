@@ -87,13 +87,13 @@ export function CraneSection() {
         </div>
 
         {/* Real truck drives across on scroll */}
-        <div className="relative mt-16 h-40 sm:h-52">
-          <div ref={truckWrap} className="absolute bottom-6 left-0 w-[62%] max-w-md sm:w-[46%]">
+        <div className="relative mt-16 h-40 sm:h-56">
+          <div ref={truckWrap} className="absolute bottom-6 left-0 w-[70%] max-w-xl sm:w-[52%]">
             <SceneImg
-              src="/scenes/truck.png"
-              alt="GlobalSource Africa delivery truck"
+              src="/scenes/truck.webp"
+              alt="GlobalSource Africa container truck"
               className="h-auto w-full drop-shadow-xl"
-              label="DROP: /public/scenes/truck.png — side-view cargo truck, transparent, facing right"
+              label="MISSING: /public/scenes/truck.webp"
             />
           </div>
           {/* road */}

@@ -74,29 +74,28 @@ export function LandingCTA() {
         </div>
 
         {/* Landing scene */}
-        <div className="relative mx-auto mt-10 h-[360px] w-full max-w-3xl sm:h-[440px]">
+        <div className="relative mx-auto mt-10 h-[380px] w-full max-w-3xl sm:h-[460px]">
           {/* waiting flatbed truck */}
-          <div ref={truck} className="absolute bottom-4 left-1/2 w-[86%] max-w-2xl -translate-x-1/2">
+          <div ref={truck} className="absolute bottom-4 left-1/2 w-[92%] max-w-2xl -translate-x-1/2">
             <SceneImg
-              src="/scenes/flatbed.png"
+              src="/scenes/flatbed.webp"
               alt="Flatbed truck waiting"
               className="h-auto w-full"
-              label="DROP: /public/scenes/flatbed.png — side-view flatbed truck, empty bed, transparent, facing left"
+              label="MISSING: /public/scenes/flatbed.webp"
             />
           </div>
 
-          {/* descending container (rest pose sits on the bed) */}
-          <div ref={box} className="absolute bottom-[86px] left-1/2 w-[52%] max-w-md -translate-x-1/2">
-            {/* crane cables to the sky */}
+          {/* descending container — the image carries its own crane spreader;
+              one hoist line continues from its top up out of the scene */}
+          <div ref={box} className="absolute bottom-[74px] left-1/2 w-[46%] max-w-sm -translate-x-[58%]">
             <div ref={cables}>
-              <span className="absolute bottom-full left-[16%] h-[380px] w-0.5 bg-steel/60" />
-              <span className="absolute bottom-full right-[16%] h-[380px] w-0.5 bg-steel/60" />
+              <span className="absolute bottom-full left-1/2 h-[420px] w-0.5 -translate-x-1/2 bg-steel/60" />
             </div>
             <SceneImg
-              src="/scenes/container.png"
-              alt="GlobalSource Africa container"
+              src="/scenes/container.webp"
+              alt="GlobalSource Africa container on crane spreader"
               className="h-auto w-full drop-shadow-2xl"
-              label="DROP: /public/scenes/container.png — side-view container, transparent"
+              label="MISSING: /public/scenes/container.webp"
             />
           </div>
         </div>
