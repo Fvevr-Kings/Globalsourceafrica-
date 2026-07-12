@@ -3,6 +3,7 @@ import { Outfit, Inter, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/v2/SiteNav";
 import { SiteFooter } from "@/components/v2/SiteFooter";
+import { SmoothScroll } from "@/components/v2/SmoothScroll";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 // Clean, modern display font for the brand wordmark + headings.
@@ -96,6 +97,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${inter.variable} ${heading.variable} ${mono.variable}`}>
       <body>
+        <SmoothScroll />
         <SiteNav />
         <main>{children}</main>
         <SiteFooter />

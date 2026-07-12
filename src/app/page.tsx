@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck, FileSearch, ClipboardCheck, Truck, PackageCheck, MapPin } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
 import { TrustStrip } from "@/components/v2/TrustStrip";
-import { HeroContainerStatic } from "@/components/v2/HeroContainerStatic";
+import { HeroVisual } from "@/components/v2/hero/HeroVisual";
 import { ServiceCard } from "@/components/v2/ServiceCard";
 import { SERVICES } from "@/lib/v2/services";
 
@@ -56,7 +56,7 @@ export default function HomePage() {
             <TrustStrip className="mt-10 text-white/55" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
           </div>
           <div className="lg:pl-8">
-            <HeroContainerStatic />
+            <HeroVisual />
           </div>
         </div>
       </section>
