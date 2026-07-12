@@ -33,30 +33,37 @@ const ARTICLES = [
 export default function HomePage() {
   return (
     <>
-      {/* 1 · HERO */}
-      <section className="gsa-corrugation relative overflow-hidden bg-navy text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-2 lg:py-28">
-          <div>
+      {/* 1 · HERO (white, container centered on mobile / right on desktop) */}
+      <section className="gsa-corrugation relative overflow-hidden bg-white text-navy">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 lg:grid-cols-2 lg:py-24">
+          <div className="text-center lg:text-left">
             <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>
-            <h1 className="gsa-heading mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="gsa-heading mt-5 text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
               Your verification and sourcing partner on the ground in Africa
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-steel lg:mx-0">
               We help international buyers find, verify and buy from African
               suppliers safely — before you send a single dollar.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
               <Link href="/request" className="inline-flex items-center gap-2 rounded-full bg-container px-6 py-3 font-semibold text-white transition-colors hover:bg-container/90">
                 Request Sourcing <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/services/verification" className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3 font-semibold text-white transition-colors hover:bg-white/5">
+              <Link href="/services/verification" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-semibold text-navy transition-colors hover:bg-paper">
                 <ShieldCheck className="h-4 w-4" /> Verify a Supplier
               </Link>
             </div>
-            <TrustStrip className="mt-10 text-white/55" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
+            <TrustStrip className="mt-10 justify-center text-steel lg:justify-start" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
           </div>
-          <div className="lg:pl-8">
-            <HeroVisual />
+
+          {/* Container visual — centered on mobile, right on desktop, with 360° badge */}
+          <div className="relative flex justify-center">
+            <span className="absolute left-2 top-6 z-10 flex h-14 w-14 items-center justify-center rounded-full bg-container font-mono text-xs font-bold text-white shadow-lg sm:left-6">
+              360°
+            </span>
+            <div className="w-full max-w-lg">
+              <HeroVisual />
+            </div>
           </div>
         </div>
       </section>

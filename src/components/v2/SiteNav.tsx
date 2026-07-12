@@ -21,10 +21,10 @@ export function SiteNav() {
   if (pathname?.startsWith("/admin") || pathname?.startsWith("/auth")) return null;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-navy/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-steel/15 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
         <Link href="/" className="flex items-baseline gap-2" onClick={() => setOpen(false)}>
-          <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-white">
+          <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-navy">
             GlobalSource
           </span>
           <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
@@ -40,7 +40,7 @@ export function SiteNav() {
                 key={l.href}
                 href={l.href}
                 className={`text-sm font-medium transition-colors ${
-                  active ? "text-container" : "text-white/80 hover:text-white"
+                  active ? "text-container" : "text-navy/70 hover:text-navy"
                 }`}
               >
                 {l.label}
@@ -52,7 +52,7 @@ export function SiteNav() {
         <div className="hidden items-center gap-4 md:flex">
           <Link
             href="/services/verification"
-            className="text-sm font-medium text-white/80 hover:text-white"
+            className="text-sm font-medium text-navy/70 hover:text-navy"
           >
             Verify a Supplier
           </Link>
@@ -69,21 +69,21 @@ export function SiteNav() {
           onClick={() => setOpen((o) => !o)}
           aria-label="Menu"
           aria-expanded={open}
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-white md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-navy md:hidden"
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
 
       {open && (
-        <div className="border-t border-white/10 px-4 py-3 md:hidden">
+        <div className="border-t border-steel/15 px-4 py-3 md:hidden">
           <div className="flex flex-col gap-1">
             {LINKS.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/90 hover:bg-white/5"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-navy/80 hover:bg-paper"
               >
                 {l.label}
               </Link>
@@ -91,7 +91,7 @@ export function SiteNav() {
             <Link
               href="/services/verification"
               onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-white/90 hover:bg-white/5"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-navy/80 hover:bg-paper"
             >
               Verify a Supplier
             </Link>
