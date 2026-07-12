@@ -89,24 +89,26 @@ export function SceneRig() {
   );
 }
 
-// Base 3/4 tilt (Bankar reference): tip forward so the top face shows, and roll
-// onto a corner so a long side AND an end (corner castings) read at once. Set
-// ONCE on the group's rotation prop — never touched by the scroll handler.
-export const BASE_TILT: [number, number, number] = [-0.35, 0, 0.45];
+// FIXED diagonal pose (reference): door end lifted toward upper-left, opposite
+// end plunging lower-right, top face + one long side visible. Set ONCE on the
+// outer poseGroup's rotation prop — the scroll handler NEVER touches it.
+//   x: -0.30 tips it so the top face shows
+//   y:  0.35 turns the door end toward the viewer/left
+//   z:  0.55 lifts the left end, drops the right end (the diagonal)
+export const POSE: [number, number, number] = [-0.3, 0.35, 0.55];
 
-// Scroll spin: ONLY rotation.y is driven by progress (0 → 2π) — the tilted
-// object turns on its own vertical axis like a rotisserie; the tilt persists.
-// Stops when scrolling stops (scrub eases it to rest; no idle spin).
-export function useRoll(
-  group: MutableRefObject<THREE.Group | null>,
+// Scroll roll: ONLY rollGroup.rotation.x (the container's LONG axis — length
+// lies along local X inside the roll group). Nested inside the tilted
+// poseGroup, this local-X roll spins it in place like a rolling pin on the
+// diagonal — the pose never changes, nothing sweeps across the page.
+export function useLongRoll(
+  rollGroup: MutableRefObject<THREE.Group | null>,
   progress: MutableRefObject<number>
 ) {
   useFrame(() => {
-    if (!group.current) return;
-    const p = progress.current;
-    group.current.rotation.y = p * Math.PI * 2; // x/z tilt untouched
-    group.current.position.y = p * 0.6;
-    group.current.scale.setScalar(1 - p * 0.12);
+    if (!rollGroup.current) return;
+    // scroll down = roll forward; negate if the direction ever feels wrong
+    rollGroup.current.rotation.x = progress.current * Math.PI * 2;
   });
 }
 
@@ -117,12 +119,15 @@ export function ProceduralContainer({ progress }: { progress: MutableRefObject<n
     const L = 3.4, H = 1.5, D = 1.5;
     return [makePanel(L, H, true), makePanel(D, H, false)];
   }, []);
-  useRoll(group, progress);
+  useLongRoll(group, progress);
   const matProps = { metalness: 0.7, roughness: 0.38 } as const;
 
+  // poseGroup (fixed diagonal) → rollGroup (long-axis roll only). The box's
+  // length already lies along local X.
   return (
-    <group ref={group} rotation={BASE_TILT}>
-      <mesh castShadow>
+    <group rotation={POSE}>
+      <group ref={group}>
+        <mesh castShadow>
         <boxGeometry args={[3.4, 1.5, 1.5]} />
         <meshStandardMaterial attach="material-0" map={endTex} {...matProps} />
         <meshStandardMaterial attach="material-1" map={endTex} {...matProps} />
@@ -130,7 +135,8 @@ export function ProceduralContainer({ progress }: { progress: MutableRefObject<n
         <meshStandardMaterial attach="material-3" color={BODY_DARK} {...matProps} />
         <meshStandardMaterial attach="material-4" map={sideTex} {...matProps} />
         <meshStandardMaterial attach="material-5" map={sideTex} {...matProps} />
-      </mesh>
+        </mesh>
+      </group>
     </group>
   );
 }

@@ -3,7 +3,7 @@
 import { useMemo, useRef, type MutableRefObject } from "react";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { useRoll, BASE_TILT } from "./ContainerScene";
+import { useLongRoll, POSE } from "./ContainerScene";
 
 const MODEL_URL = "/models/container.glb";
 const ORANGE = "#E8622C";
@@ -72,7 +72,7 @@ export function ContainerModel({ progress }: { progress: MutableRefObject<number
 
   const brandTex = useMemo(() => makeBrandTexture(), []);
 
-  useRoll(group, progress);
+  useLongRoll(group, progress);
 
   // Inside the inner group the model's LENGTH runs along Z and the long sides
   // face ±X — so the brand planes sit just off ±X, spanning Z.
@@ -80,21 +80,25 @@ export function ContainerModel({ progress }: { progress: MutableRefObject<number
   const decalH = decalW * (256 / 1024);
   const sideX = dims.x / 2 + 0.015;
 
-  // Outer group carries the FIXED 3/4 tilt (set once via BASE_TILT — the scroll
-  // loop only mutates rotation.y, so the tilt persists through the whole spin).
-  // Inner group yaws 90° to lay this model's Z-length horizontal, broadside.
+  // poseGroup (FIXED diagonal pose — scroll never touches it) → rollGroup (the
+  // ONLY thing scroll mutates: rotation.x) → yaw group laying the model's
+  // Z-length along the roll group's local X. The X-roll therefore spins the
+  // container along its own length like a rolling pin on the diagonal — the
+  // pose never changes, nothing tumbles or sweeps across the page.
   return (
-    <group ref={group} rotation={BASE_TILT}>
-      <group rotation={[0, Math.PI / 2, 0]}>
-        <primitive object={model} />
-        <mesh position={[sideX, dims.y * 0.06, 0]} rotation={[0, Math.PI / 2, 0]}>
-          <planeGeometry args={[decalW, decalH]} />
-          <meshBasicMaterial map={brandTex} transparent toneMapped={false} />
-        </mesh>
-        <mesh position={[-sideX, dims.y * 0.06, 0]} rotation={[0, -Math.PI / 2, 0]}>
-          <planeGeometry args={[decalW, decalH]} />
-          <meshBasicMaterial map={brandTex} transparent toneMapped={false} />
-        </mesh>
+    <group rotation={POSE}>
+      <group ref={group}>
+        <group rotation={[0, Math.PI / 2, 0]}>
+          <primitive object={model} />
+          <mesh position={[sideX, dims.y * 0.06, 0]} rotation={[0, Math.PI / 2, 0]}>
+            <planeGeometry args={[decalW, decalH]} />
+            <meshBasicMaterial map={brandTex} transparent toneMapped={false} />
+          </mesh>
+          <mesh position={[-sideX, dims.y * 0.06, 0]} rotation={[0, -Math.PI / 2, 0]}>
+            <planeGeometry args={[decalW, decalH]} />
+            <meshBasicMaterial map={brandTex} transparent toneMapped={false} />
+          </mesh>
+        </group>
       </group>
     </group>
   );

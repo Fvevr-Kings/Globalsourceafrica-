@@ -48,8 +48,9 @@ export default function HomePage() {
           </div>
           <TrustStrip className="mt-8 justify-center text-steel" items={["SGS-COORDINATED", "ACCRA / KUMASI", "48H RESPONSE", "FLAT-FEE REPORTS"]} />
 
-          {/* Container under the headline — consistent across breakpoints */}
-          <div className="mt-6 w-full max-w-xl lg:max-w-5xl">
+          {/* Container under the headline — fixed pose rolls in place, so the
+              column stays tight instead of reserving sweep room */}
+          <div className="mt-6 w-full max-w-md sm:max-w-lg lg:max-w-2xl">
             <HeroVisual />
           </div>
         </div>

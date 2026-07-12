@@ -28,14 +28,15 @@ export function LandingCTA() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: band.current,
-          start: "top 80%",
-          end: "bottom 90%",
+          start: "top 85%",
+          end: "bottom 98%",
           scrub: 1.2,
         },
       });
 
-      // Descent (0 → 0.75): fast early, feathered final metres.
-      tl.from(box.current, { yPercent: -420, ease: "power3.out", duration: 0.75 }, 0);
+      // Descent (0 → 0.75): starts just above the scene so the crane container
+      // is VISIBLE the whole way down — fast early, feathered final metres.
+      tl.from(box.current, { yPercent: -115, ease: "power3.out", duration: 0.75 }, 0);
       // Touchdown (0.75): settle bounce + suspension dip.
       tl.to(box.current, { y: 5, duration: 0.07, ease: "power2.in" }, 0.75)
         .to(box.current, { y: 0, duration: 0.08, ease: "power2.out" }, 0.82)
@@ -75,19 +76,21 @@ export function LandingCTA() {
 
         {/* Landing scene */}
         <div className="relative mx-auto mt-10 h-[380px] w-full max-w-3xl sm:h-[460px]">
-          {/* waiting flatbed truck */}
+          {/* waiting flatbed truck — flipped to face LEFT so the bed sits under
+              the descending container */}
           <div ref={truck} className="absolute bottom-4 left-1/2 w-[92%] max-w-2xl -translate-x-1/2">
             <SceneImg
               src="/scenes/flatbed.webp"
               alt="Flatbed truck waiting"
-              className="h-auto w-full"
+              className="h-auto w-full -scale-x-100"
               label="MISSING: /public/scenes/flatbed.webp"
             />
           </div>
 
           {/* descending container — the image carries its own crane spreader;
-              one hoist line continues from its top up out of the scene */}
-          <div ref={box} className="absolute bottom-[74px] left-1/2 w-[46%] max-w-sm -translate-x-[58%]">
+              one hoist line continues from its top up out of the scene. Biased
+              over the (now left-facing) bed, clear of the tractor wheels. */}
+          <div ref={box} className="absolute bottom-[78px] left-1/2 w-[44%] max-w-sm -translate-x-[38%]">
             <div ref={cables}>
               <span className="absolute bottom-full left-1/2 h-[420px] w-0.5 -translate-x-1/2 bg-steel/60" />
             </div>
