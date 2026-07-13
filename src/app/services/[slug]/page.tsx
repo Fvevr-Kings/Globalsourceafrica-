@@ -27,7 +27,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
     <>
       {/* Header band */}
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">{service.code}</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold leading-tight sm:text-5xl">
             {service.name}
@@ -54,7 +54,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-4xl px-4 py-16">
+        <div className="mx-auto max-w-4xl px-4 py-12">
           <p className="text-lg leading-relaxed text-navy/80">{service.intro}</p>
 
           {/* Protects-from stamp */}

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <section className="bg-white">
-      <div className="mx-auto max-w-3xl px-4 py-16">
+      <div className="mx-auto max-w-3xl px-4 py-12">
         <MonoLabel className="text-steel">LEGAL · PLACEHOLDER</MonoLabel>
         <h1 className="gsa-heading mt-3 text-3xl font-bold text-navy">Privacy Policy</h1>
         <p className="mt-4 text-sm text-steel">

@@ -8,7 +8,7 @@ import { SceneImg } from "./SceneImg";
 export function LandingCTA() {
   return (
     <section className="gsa-corrugation overflow-hidden bg-navy text-white">
-      <div className="mx-auto max-w-5xl px-4 pb-8 pt-20 text-center sm:pt-24">
+      <div className="mx-auto max-w-5xl px-4 pb-8 pt-14 text-center sm:pt-16">
         <MonoLabel className="text-gold">THE DEAL, DELIVERED</MonoLabel>
         <h2 className="gsa-heading mx-auto mt-4 max-w-3xl text-3xl font-extrabold sm:text-4xl lg:text-5xl">
           Ready to source from Africa without the risk?

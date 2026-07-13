@@ -12,7 +12,7 @@ export default function ContactPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">CONTACT</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">Talk to us</h1>
           <p className="mt-5 max-w-2xl text-lg text-white/70">
@@ -22,7 +22,7 @@ export default function ContactPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
+        <div className="mx-auto max-w-3xl px-4 py-12">
           <div className="grid gap-4 sm:grid-cols-2">
             <a href="mailto:hello@globalsourceafrica.com" className="flex items-center gap-3 rounded-xl border border-steel/20 bg-paper p-5 hover:border-container">
               <Mail className="h-5 w-5 text-container" />

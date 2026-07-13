@@ -14,7 +14,7 @@ export default function ResourcesPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">RESOURCES</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             Buyer guides from the ground
@@ -27,7 +27,7 @@ export default function ResourcesPage() {
       </section>
 
       <section className="bg-paper">
-        <div className="mx-auto max-w-5xl px-4 py-16">
+        <div className="mx-auto max-w-5xl px-4 py-12">
           <div className="grid gap-5 md:grid-cols-2">
             {ARTICLES.map((a) => (
               <Link

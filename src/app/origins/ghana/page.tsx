@@ -22,7 +22,7 @@ export default function GhanaPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">ORIGINS · GHANA</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             Africa&apos;s lowest-friction origin
@@ -35,7 +35,7 @@ export default function GhanaPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-4xl px-4 py-16">
+        <div className="mx-auto max-w-4xl px-4 py-12">
           <div className="grid gap-10 sm:grid-cols-2">
             <div>
               <MonoLabel className="text-steel">PRODUCT FAMILIES</MonoLabel>

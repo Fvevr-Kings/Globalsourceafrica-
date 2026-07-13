@@ -13,7 +13,7 @@ export default function ServicesPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-7xl px-4 py-20">
+        <div className="mx-auto max-w-7xl px-4 py-14">
           <MonoLabel className="text-container">SERVICES</MonoLabel>
           <h1 className="gsa-heading mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
             Everything you need to buy from Africa with confidence
@@ -26,7 +26,7 @@ export default function ServicesPage() {
       </section>
 
       <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 py-16">
+        <div className="mx-auto max-w-7xl px-4 py-12">
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {SERVICES.map((s) => (
               <ServiceCard key={s.slug} service={s} />

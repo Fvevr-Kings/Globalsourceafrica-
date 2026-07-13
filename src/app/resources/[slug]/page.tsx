@@ -22,7 +22,7 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
+        <div className="mx-auto max-w-3xl px-4 py-12">
           <Link href="/resources" className="inline-flex items-center gap-1 text-sm text-white/60 hover:text-white">
             <ChevronLeft className="h-4 w-4" /> Resources
           </Link>

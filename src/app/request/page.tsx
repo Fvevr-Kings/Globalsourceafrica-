@@ -18,7 +18,7 @@ export default function RequestPage({
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
+        <div className="mx-auto max-w-3xl px-4 py-12">
           <MonoLabel className="text-container">REQUEST</MonoLabel>
           <h1 className="gsa-heading mt-3 text-3xl font-extrabold sm:text-4xl">
             Tell us what you need

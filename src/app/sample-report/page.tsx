@@ -38,7 +38,7 @@ export default function SampleReportPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-16">
+        <div className="mx-auto max-w-4xl px-4 py-12">
           <MonoLabel className="text-container">SAMPLE REPORT</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             See exactly what you get before you pay

@@ -40,7 +40,7 @@ export default function OriginsPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">ORIGINS</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             Where we&apos;re on the ground
@@ -53,7 +53,7 @@ export default function OriginsPage() {
       </section>
 
       <section className="bg-paper">
-        <div className="mx-auto max-w-5xl px-4 py-16">
+        <div className="mx-auto max-w-5xl px-4 py-12">
           <div className="grid gap-5 md:grid-cols-3">
             {ORIGINS.map((o) => (
               <div key={o.slug} className={`rounded-xl border bg-white p-6 ${o.live ? "border-container" : "border-steel/20"}`}>

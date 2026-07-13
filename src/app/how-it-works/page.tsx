@@ -21,7 +21,7 @@ export default function HowItWorksPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">HOW IT WORKS</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             From request to verified deal
@@ -34,7 +34,7 @@ export default function HowItWorksPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-3xl px-4 py-16">
+        <div className="mx-auto max-w-3xl px-4 py-12">
           <ol className="space-y-10">
             {STEPS.map((s) => (
               <li key={s.n} className="flex gap-5">

@@ -13,7 +13,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto max-w-4xl px-4 py-20">
+        <div className="mx-auto max-w-4xl px-4 py-14">
           <MonoLabel className="text-container">ABOUT</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             Trust services can&apos;t be anonymous
@@ -27,7 +27,7 @@ export default function AboutPage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto max-w-4xl px-4 py-16">
+        <div className="mx-auto max-w-4xl px-4 py-12">
           <div className="grid gap-5 sm:grid-cols-2">
             <div className="rounded-2xl border border-steel/20 bg-paper p-6">
               <h2 className="gsa-heading text-lg font-bold text-navy">Why we exist</h2>

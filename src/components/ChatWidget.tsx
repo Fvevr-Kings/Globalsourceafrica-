@@ -54,7 +54,14 @@ const GREETING =
 
 // Minimal renderer: turns [label](url) and bare /paths or https links into
 // anchors, preserves line breaks. Avoids pulling in a markdown dependency.
-function renderContent(text: string) {
+function renderContent(raw: string) {
+  // Safety net: strip any stray markdown the model emits (the panel shows raw
+  // characters, so **bold**, # headings and * bullets would look broken).
+  const text = raw
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/^\s*[*•]\s+/gm, "- ")
+    .trim();
   const parts: React.ReactNode[] = [];
   const pattern =
     /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]+)\)|(https?:\/\/[^\s]+|\/product\/[^\s]+)/g;

@@ -42,7 +42,7 @@ export default function HomePage() {
           aria-hidden
           className="pointer-events-none absolute left-1/2 z-0 max-w-none -translate-x-1/2 select-none -bottom-8 w-[145%] sm:-bottom-16 sm:w-[135%] lg:-bottom-40 lg:w-[108%]"
         />
-        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pb-0 pt-16 text-center lg:pt-20">
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pb-0 pt-6 text-center lg:pt-8">
           <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>
           <h1 className="gsa-heading mt-5 max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
             Your verification and sourcing partner on the ground in Africa
@@ -94,7 +94,7 @@ export default function HomePage() {
 
       {/* 3 · SERVICES GRID */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 pb-20 pt-12">
+        <div className="mx-auto max-w-7xl px-4 pb-14 pt-10">
           <MonoLabel className="text-steel">WHAT WE DO</MonoLabel>
           <h2 className="gsa-heading mt-3 text-3xl font-bold text-navy sm:text-4xl">
             Four ways we protect your Africa deal
@@ -112,7 +112,7 @@ export default function HomePage() {
 
       {/* 5 · SAMPLE REPORT TEASER */}
       <section className="bg-paper">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-20 lg:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 lg:grid-cols-2">
           <div className="relative h-64 sm:h-80">
             {[0, 1, 2].map((i) => (
               <div
@@ -155,7 +155,7 @@ export default function HomePage() {
 
       {/* 6 · ORIGINS — GHANA FIRST */}
       <section className="gsa-corrugation bg-navy text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-2 lg:items-center">
           <div>
             <MonoLabel className="text-gold">ORIGINS</MonoLabel>
             <h2 className="gsa-heading mt-3 text-3xl font-bold sm:text-4xl">
@@ -191,7 +191,7 @@ export default function HomePage() {
 
       {/* 7 · WHO'S ON THE GROUND */}
       <section className="bg-white">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 px-4 py-20 sm:flex-row sm:items-start">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-8 px-4 py-14 sm:flex-row sm:items-start">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/ceo.jpg"
@@ -216,7 +216,7 @@ export default function HomePage() {
 
       {/* 8 · RESOURCES TEASER */}
       <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 py-20">
+        <div className="mx-auto max-w-7xl px-4 py-14">
           <div className="flex items-end justify-between">
             <div>
               <MonoLabel className="text-steel">RESOURCES</MonoLabel>

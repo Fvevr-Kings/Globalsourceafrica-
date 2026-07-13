@@ -59,7 +59,7 @@ export function CraneSection() {
 
   return (
     <section ref={section} className="overflow-hidden bg-paper">
-      <div className="mx-auto max-w-7xl px-4 py-20">
+      <div className="mx-auto max-w-7xl px-4 py-14">
         <div className="text-center">
           <MonoLabel className="text-container">HOW IT WORKS</MonoLabel>
           <h2 className="gsa-heading mt-3 text-3xl font-bold text-navy sm:text-4xl">
@@ -87,7 +87,7 @@ export function CraneSection() {
         </div>
 
         {/* Real truck drives across on scroll */}
-        <div className="relative mt-16 h-40 sm:h-56">
+        <div className="relative mt-10 h-32 sm:h-44">
           <div ref={truckWrap} className="absolute bottom-6 left-0 w-[70%] max-w-xl sm:w-[52%]">
             <SceneImg
               src="/scenes/truck.webp"
