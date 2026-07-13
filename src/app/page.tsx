@@ -29,7 +29,20 @@ export default function HomePage() {
     <>
       {/* 1 · HERO — single column on every screen: H1 on top, container below */}
       <section className="gsa-corrugation relative overflow-hidden bg-white text-navy">
-        <div className="mx-auto flex max-w-5xl flex-col items-center px-4 pb-10 pt-16 text-center lg:pt-20">
+        {/* Earth backdrop — transparent-sky PNG, globe anchored low and
+            stretched full-bleed edge to edge, so the falling container reads
+            as tumbling down toward the planet. Wider than the viewport on
+            phones (so the globe is a real planet, not a thin band) and sunk
+            below the copy so its bright rim never fights the trust strip.
+            aria-hidden: pure decoration. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/scenes/earth.png"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 z-0 max-w-none -translate-x-1/2 select-none -bottom-8 w-[145%] sm:-bottom-16 sm:w-[135%] lg:-bottom-40 lg:w-[108%]"
+        />
+        <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pb-0 pt-16 text-center lg:pt-20">
           <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>
           <h1 className="gsa-heading mt-5 max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight text-navy sm:text-5xl lg:text-6xl">
             Your verification and sourcing partner on the ground in Africa
@@ -38,11 +51,12 @@ export default function HomePage() {
             We help international buyers find, verify and buy from African
             suppliers safely — before you send a single dollar.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/request" className="inline-flex items-center gap-2 rounded-full bg-container px-6 py-3 font-semibold text-white transition-colors hover:bg-container/90">
+          {/* Side by side on every screen (kept on one row on phones) */}
+          <div className="mt-8 flex justify-center gap-2 sm:gap-3">
+            <Link href="/request" className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-container px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand sm:px-6 sm:py-3 sm:text-base">
               Request Sourcing <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/services/verification" className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-6 py-3 font-semibold text-navy transition-colors hover:bg-paper">
+            <Link href="/services/verification" className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-navy/20 px-4 py-2.5 text-sm font-semibold text-navy transition-colors hover:bg-paper sm:px-6 sm:py-3 sm:text-base">
               <ShieldCheck className="h-4 w-4" /> Verify a Supplier
             </Link>
           </div>
@@ -50,15 +64,16 @@ export default function HomePage() {
 
           {/* Container under the headline — fixed pose rolls in place, so the
               column stays tight instead of reserving sweep room */}
-          <div className="mt-6 w-full max-w-md sm:max-w-lg lg:max-w-3xl">
+          <div className="mt-2 w-full max-w-md sm:max-w-lg lg:max-w-3xl">
             <HeroVisual />
           </div>
         </div>
       </section>
 
-      {/* 2 · PROBLEM STRIP */}
+      {/* 2 · PROBLEM STRIP — tight top padding: the hero container above sits
+          almost directly on these headings */}
       <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 py-16">
+        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8">
           <div className="grid gap-8 sm:grid-cols-3">
             {[
               { h: "Fake exporters", d: "Companies that don't exist, or can't actually export, take your deposit and vanish." },
@@ -71,7 +86,7 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <p className="gsa-heading mt-10 text-center text-2xl font-bold text-container">
+          <p className="gsa-heading mt-6 text-center text-3xl font-extrabold text-container sm:text-4xl">
             This is why we exist.
           </p>
         </div>
@@ -79,7 +94,7 @@ export default function HomePage() {
 
       {/* 3 · SERVICES GRID */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-20">
+        <div className="mx-auto max-w-7xl px-4 pb-20 pt-12">
           <MonoLabel className="text-steel">WHAT WE DO</MonoLabel>
           <h2 className="gsa-heading mt-3 text-3xl font-bold text-navy sm:text-4xl">
             Four ways we protect your Africa deal
@@ -142,7 +157,7 @@ export default function HomePage() {
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
           <div>
-            <MonoLabel className="text-container">ORIGINS</MonoLabel>
+            <MonoLabel className="text-gold">ORIGINS</MonoLabel>
             <h2 className="gsa-heading mt-3 text-3xl font-bold sm:text-4xl">
               Ghana first — where our ground presence is deepest
             </h2>
@@ -156,14 +171,14 @@ export default function HomePage() {
               More origins as clients demand them — <span className="text-white">Egypt and Nigeria next</span>. We&apos;d
               rather be honest about where we&apos;re strong than claim a whole continent.
             </p>
-            <Link href="/origins" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-container hover:gap-2.5">
+            <Link href="/origins" className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-gold hover:gap-2.5">
               Explore origins <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
           <div className="grid gap-3">
             {REGIONS.map((r) => (
               <div key={r.name} className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                <MapPin className="h-5 w-5 shrink-0 text-container" />
+                <MapPin className="h-5 w-5 shrink-0 text-gold" />
                 <div>
                   <p className="font-semibold">{r.name}</p>
                   <p className="font-mono text-xs uppercase tracking-wider text-white/50">{r.note}</p>

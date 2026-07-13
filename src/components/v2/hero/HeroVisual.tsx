@@ -6,7 +6,7 @@ import { HeroContainerStatic } from "../HeroContainerStatic";
 
 // 3D canvas never joins the server bundle; static shows while it loads.
 const ContainerHero3D = dynamic(
-  () => import("./ContainerHero3D").then((m) => m.ContainerHero3D),
+  () => import("./ContainerHero").then((m) => m.ContainerHero),
   { ssr: false, loading: () => <HeroContainerStatic /> }
 );
 

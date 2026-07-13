@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowLeft } from "lucide-react";
 
 const LINKS = [
   { href: "/services", label: "Services" },
@@ -20,21 +20,36 @@ export function SiteNav() {
   // Admin / auth keep their own chrome.
   if (pathname?.startsWith("/admin") || pathname?.startsWith("/auth")) return null;
 
+  const isHome = pathname === "/";
+
   return (
     <header className="sticky top-0 z-50 border-b border-steel/15 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5">
-        <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/main_logo.png" alt="GlobalSource Africa" className="h-9 w-auto" />
-          <span className="flex items-baseline gap-2">
-            <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-navy">
-              GlobalSource
+        <div className="flex items-center gap-2.5 sm:gap-4">
+          <Link href="/" className="flex items-center gap-2.5" onClick={() => setOpen(false)}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icons/main_logo.png" alt="GlobalSource Africa" className="h-9 w-auto" />
+            <span className="flex items-baseline gap-2">
+              <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-navy">
+                GlobalSource
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
+                Africa
+              </span>
             </span>
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
-              Africa
-            </span>
-          </span>
-        </Link>
+          </Link>
+          {/* Explicit back-to-home on every non-home page */}
+          {!isHome && (
+            <Link
+              href="/"
+              aria-label="Back to home"
+              onClick={() => setOpen(false)}
+              className="inline-flex items-center gap-1 rounded-full border border-steel/25 px-3 py-1.5 text-xs font-semibold text-navy/70 transition-colors hover:border-container hover:text-container"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" /> Home
+            </Link>
+          )}
+        </div>
 
         <div className="hidden items-center gap-7 md:flex">
           {LINKS.map((l) => {

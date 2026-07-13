@@ -18,8 +18,15 @@ const config: Config = {
         cream: "#FBFAF7", // page canvas
 
         // --- v2 sourcing-service tokens (PRD §3.2) ---
-        navy: "#0B2239", // dark sections, nav, footer
-        container: "#E8622C", // primary accent — CTAs, hero container livery
+        navy: "#0B2239", // dark sections, nav, footer (kept as the base)
+        // Brand accent, pulled from the GSA logo. `container` is the primary
+        // accent used site-wide for CTAs + accents; repointed from the old
+        // orange to the brand forest green so buttons/accents match the mark.
+        container: "#1B6B3F", // primary accent — CTAs, links, active states
+        brand: "#1B4D2E", // deep forest green — richest brand green
+        leaf: "#3E8E3F", // brighter leaf green — accents that need to pop
+        gold: "#C9A227", // warm gold — highlights on dark/navy backgrounds
+        goldDark: "#A67C1A", // gold hover / deeper amber
         paper: "#F6F4EF", // light "shipping manifest" section backgrounds
         steel: "#6B7683", // secondary text, borders, corrugation lines
         cleared: "#1E7A4F", // verification badges / success only

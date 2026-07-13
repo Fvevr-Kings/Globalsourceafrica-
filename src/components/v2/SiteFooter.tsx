@@ -22,7 +22,7 @@ export function SiteFooter() {
               <span className="gsa-heading text-lg font-extrabold uppercase tracking-tight text-white">
                 GlobalSource
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-container">
+              <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-gold">
                 Africa
               </span>
             </span>

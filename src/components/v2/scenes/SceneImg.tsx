@@ -10,11 +10,13 @@ export function SceneImg({
   alt,
   className = "",
   label,
+  style,
 }: {
   src: string;
   alt: string;
   className?: string;
   label: string;
+  style?: React.CSSProperties;
 }) {
   const [ok, setOk] = useState(true);
   if (!ok) {
@@ -27,5 +29,5 @@ export function SceneImg({
     );
   }
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} className={className} onError={() => setOk(false)} draggable={false} />;
+  return <img src={src} alt={alt} className={className} style={style} onError={() => setOk(false)} draggable={false} />;
 }

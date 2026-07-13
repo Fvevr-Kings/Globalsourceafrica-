@@ -40,7 +40,7 @@ function ProductCards({ products }: { products: ProductCard[] }) {
               {p.base_unit ? ` · ${p.base_unit}` : ""}
               {p.origin_country ? ` · ${p.origin_country}` : ""}
             </p>
-            {!p.in_stock && <p className="text-xs text-orangeDark">Out of stock</p>}
+            {!p.in_stock && <p className="text-xs text-goldDark">Out of stock</p>}
           </div>
           <ChevronRight className="h-4 w-4 shrink-0 text-green" />
         </a>
@@ -50,7 +50,7 @@ function ProductCards({ products }: { products: ProductCard[] }) {
 }
 
 const GREETING =
-  "Hi! I'm the GlobalSource Africa assistant. I can help you find products, explain bulk pricing, or take a quote or sourcing request. What are you looking for?";
+  "Hi! I'm the GlobalSource Africa assistant. I can explain our verification, sourcing and inspection services, walk you through how it works, or start a request. I can also look things up on the web. How can I help?";
 
 // Minimal renderer: turns [label](url) and bare /paths or https links into
 // anchors, preserves line breaks. Avoids pulling in a markdown dependency.
@@ -69,7 +69,7 @@ function renderContent(text: string) {
       <a
         key={key++}
         href={href}
-        className="font-medium text-green underline underline-offset-2 hover:text-orange"
+        className="font-medium text-container underline underline-offset-2 hover:text-goldDark"
       >
         {label ?? href}
       </a>
@@ -233,7 +233,7 @@ export function ChatWidget() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label={open ? "Close chat" : "Open chat assistant"}
-        className={`fixed bottom-5 right-5 z-40 h-14 w-14 items-center justify-center rounded-full bg-green text-white shadow-lg transition hover:bg-orange focus:outline-none focus:ring-2 focus:ring-orange/50 ${
+        className={`fixed bottom-5 right-5 z-40 h-14 w-14 items-center justify-center rounded-full bg-container text-white shadow-lg transition hover:bg-brand focus:outline-none focus:ring-2 focus:ring-container/40 ${
           open ? "hidden sm:flex" : "flex"
         }`}
       >
@@ -252,7 +252,7 @@ export function ChatWidget() {
             <MessageCircle className="h-5 w-5 shrink-0" />
             <div className="min-w-0 flex-1 leading-tight">
               <p className="font-display text-sm font-semibold">GlobalSource Assistant</p>
-              <p className="text-xs text-white/80">Products · Quotes · Sourcing</p>
+              <p className="text-xs text-white/80">Verification · Sourcing · Inspection</p>
             </div>
             <button
               onClick={() => setOpen(false)}
@@ -273,7 +273,7 @@ export function ChatWidget() {
                   <div
                     className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-3 py-2 text-sm ${
                       m.role === "user"
-                        ? "bg-orange text-white"
+                        ? "bg-container text-white"
                         : "border border-greenLine bg-white text-ink"
                     }`}
                   >
@@ -293,7 +293,7 @@ export function ChatWidget() {
               </div>
             )}
             {error && (
-              <p className="rounded-lg bg-orange/10 px-3 py-2 text-xs text-orangeDark">{error}</p>
+              <p className="rounded-lg bg-gold/15 px-3 py-2 text-xs text-goldDark">{error}</p>
             )}
           </div>
 
@@ -316,7 +316,7 @@ export function ChatWidget() {
               type="submit"
               disabled={busy || !input.trim()}
               aria-label="Send"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange text-white hover:bg-orangeDark disabled:opacity-50"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-container text-white hover:bg-brand disabled:opacity-50"
             >
               <Send className="h-4 w-4" />
             </button>

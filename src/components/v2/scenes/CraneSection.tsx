@@ -20,7 +20,7 @@ const STEPS = [
 
 // How It Works — 5 steps reveal in sequence, then a REAL truck image drives
 // across the section as you scroll (PRD §4.2, LogiCart-style delight). Uses a
-// transparent PNG at /scenes/truck.png. Reduced-motion: static.
+// transparent PNG at /scenes/truck.webp. Reduced-motion: static.
 export function CraneSection() {
   const section = useRef<HTMLElement>(null);
   const truckWrap = useRef<HTMLDivElement>(null);

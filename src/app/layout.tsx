@@ -5,6 +5,7 @@ import { SiteNav } from "@/components/v2/SiteNav";
 import { SiteFooter } from "@/components/v2/SiteFooter";
 import { SmoothScroll } from "@/components/v2/SmoothScroll";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
+import { ChatWidget } from "@/components/ChatWidget";
 
 // Clean, modern display font for the brand wordmark + headings.
 const display = Outfit({
@@ -101,6 +102,7 @@ export default function RootLayout({
         <SiteNav />
         <main>{children}</main>
         <SiteFooter />
+        <ChatWidget />
         <ServiceWorkerRegister />
       </body>
     </html>
