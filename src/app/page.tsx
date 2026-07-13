@@ -32,15 +32,19 @@ export default function HomePage() {
         {/* Earth backdrop — transparent-sky PNG, globe anchored low and
             stretched full-bleed edge to edge, so the falling container reads
             as tumbling down toward the planet. Wider than the viewport on
-            phones (so the globe is a real planet, not a thin band) and sunk
-            below the copy so its bright rim never fights the trust strip.
+            phones (so the globe is a real planet, not a thin band).
+            On desktop the image is full-bleed, so its HEIGHT (and therefore
+            how high the bright rim arcs) grows with the viewport width — a
+            fixed offset would clear the copy at 1440 and swallow it at 1920.
+            The vw-based offset sinks the globe in proportion to its own size,
+            so the rim always lands just below the trust strip at any width.
             aria-hidden: pure decoration. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/scenes/earth.png"
           alt=""
           aria-hidden
-          className="pointer-events-none absolute left-1/2 z-0 max-w-none -translate-x-1/2 select-none -bottom-8 w-[145%] sm:-bottom-16 sm:w-[135%] lg:-bottom-40 lg:w-[108%]"
+          className="pointer-events-none absolute left-1/2 z-0 max-w-none -translate-x-1/2 select-none -bottom-8 w-[145%] sm:-bottom-24 sm:w-[130%] lg:w-full lg:[bottom:calc(460px_-_44.7vw)]"
         />
         <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center px-4 pb-0 pt-6 text-center lg:pt-8">
           <MonoLabel className="text-container">ON-GROUND SINCE 2026 · GHANA</MonoLabel>

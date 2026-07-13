@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, FileCheck2, ClipboardList } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 import { StampBox } from "@/components/v2/StampBox";
 import { SERVICES, getService } from "@/lib/v2/services";
 
@@ -28,6 +29,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       {/* Header band */}
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-4xl px-4 py-14">
+          <BackToHome />
           <MonoLabel className="text-container">{service.code}</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold leading-tight sm:text-5xl">
             {service.name}

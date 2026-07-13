@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 import { ServiceCard } from "@/components/v2/ServiceCard";
 import { SERVICES } from "@/lib/v2/services";
 
@@ -14,6 +15,7 @@ export default function ServicesPage() {
     <>
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-7xl px-4 py-14">
+          <BackToHome />
           <MonoLabel className="text-container">SERVICES</MonoLabel>
           <h1 className="gsa-heading mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">
             Everything you need to buy from Africa with confidence

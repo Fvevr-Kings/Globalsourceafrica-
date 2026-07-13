@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, MapPin } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 
 export const metadata: Metadata = {
   title: "Origins — GlobalSource Africa",
@@ -41,6 +42,7 @@ export default function OriginsPage() {
     <>
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-4xl px-4 py-14">
+          <BackToHome />
           <MonoLabel className="text-container">ORIGINS</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             Where we&apos;re on the ground

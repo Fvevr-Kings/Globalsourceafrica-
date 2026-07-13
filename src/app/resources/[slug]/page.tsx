@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, ArrowRight } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 import { ARTICLES, getArticle } from "@/lib/v2/articles";
 
 export function generateStaticParams() {
@@ -23,8 +24,11 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
     <>
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-3xl px-4 py-12">
-          <Link href="/resources" className="inline-flex items-center gap-1 text-sm text-white/60 hover:text-white">
-            <ChevronLeft className="h-4 w-4" /> Resources
+          <BackToHome />
+          <Link href="/resources" className="block text-sm text-white/60 hover:text-white">
+            <span className="inline-flex items-center gap-1">
+              <ChevronLeft className="h-4 w-4" /> Resources
+            </span>
           </Link>
           <MonoLabel className="mt-4 block text-container">GUIDE · {article.readMins} MIN READ</MonoLabel>
           <h1 className="gsa-heading mt-3 text-3xl font-extrabold leading-tight sm:text-4xl">

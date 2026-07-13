@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 
 export const metadata: Metadata = {
   title: "Privacy — GlobalSource Africa",
@@ -10,6 +11,7 @@ export default function PrivacyPage() {
   return (
     <section className="bg-white">
       <div className="mx-auto max-w-3xl px-4 py-12">
+        <BackToHome />
         <MonoLabel className="text-steel">LEGAL · PLACEHOLDER</MonoLabel>
         <h1 className="gsa-heading mt-3 text-3xl font-bold text-navy">Privacy Policy</h1>
         <p className="mt-4 text-sm text-steel">

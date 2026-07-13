@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MapPin, Building2, FileCheck2, Camera, Phone } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 import { LeadGate } from "@/components/v2/LeadGate";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function SampleReportPage() {
     <>
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-4xl px-4 py-12">
+          <BackToHome />
           <MonoLabel className="text-container">SAMPLE REPORT</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">
             See exactly what you get before you pay

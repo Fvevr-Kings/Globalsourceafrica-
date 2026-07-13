@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Mail, MessageCircle, Linkedin, Clock, ArrowRight } from "lucide-react";
 import { MonoLabel } from "@/components/v2/MonoLabel";
+import { BackToHome } from "@/components/v2/BackToHome";
 
 export const metadata: Metadata = {
   title: "Contact — GlobalSource Africa",
@@ -13,6 +14,7 @@ export default function ContactPage() {
     <>
       <section className="gsa-corrugation bg-navy text-white">
         <div className="mx-auto max-w-4xl px-4 py-14">
+          <BackToHome />
           <MonoLabel className="text-container">CONTACT</MonoLabel>
           <h1 className="gsa-heading mt-3 text-4xl font-extrabold sm:text-5xl">Talk to us</h1>
           <p className="mt-5 max-w-2xl text-lg text-white/70">
