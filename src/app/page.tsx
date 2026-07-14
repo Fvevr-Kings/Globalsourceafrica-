@@ -75,9 +75,11 @@ export default function HomePage() {
       </section>
 
       {/* 2 · PROBLEM STRIP — tight top padding: the hero container above sits
-          almost directly on these headings */}
-      <section className="bg-paper">
-        <div className="mx-auto max-w-7xl px-4 pb-10 pt-8">
+          almost directly on these headings. The section's bottom padding is
+          sized to exactly seat the full-bleed field band below, so the closing
+          line reads as standing on the field without ever being overlapped. */}
+      <section className="relative overflow-hidden bg-paper pb-[150px] sm:pb-[200px] lg:pb-[300px]">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pb-10 pt-8">
           <div className="grid gap-8 sm:grid-cols-3">
             {[
               { h: "Fake exporters", d: "Companies that don't exist, or can't actually export, take your deposit and vanish." },
@@ -94,6 +96,28 @@ export default function HomePage() {
             This is why we exist.
           </p>
         </div>
+
+        {/* Full-bleed field band welded to the section floor.
+
+            field.webp is pre-cropped to the fog band + field only (the source frame
+            was ~55% dead sky), leaving a 3.17:1 asset with the workers near its top.
+            That matters for the anchor: this band is ~5:1, so object-cover always
+            discards a vertical slice. Anchoring to the BOTTOM would keep only the
+            foreground soil and guillotine the workers at the knees, so we anchor to
+            the TOP — the horizon and the workers stay in frame at every width, and
+            the crop eats near-foreground dirt instead, which reads as nothing lost.
+
+            The mask dissolves the fog edge into bg-paper; without it the photo would
+            butt straight into #F6F4EF as a hard horizontal line. The asset is
+            flattened onto that same #F6F4EF, so the fade has nothing to reveal. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/scenes/field.webp"
+          alt=""
+          aria-hidden
+          loading="lazy"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[150px] w-full select-none object-cover object-top sm:h-[200px] lg:h-[300px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%)]"
+        />
       </section>
 
       {/* 3 · SERVICES GRID */}
