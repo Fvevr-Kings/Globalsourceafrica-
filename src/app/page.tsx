@@ -78,8 +78,24 @@ export default function HomePage() {
           almost directly on these headings. The section's bottom padding is
           sized to exactly seat the full-bleed field band below, so the closing
           line reads as standing on the field without ever being overlapped. */}
-      <section className="relative overflow-hidden bg-paper pb-[150px] sm:pb-[200px] lg:pb-[300px]">
-        <div className="relative z-10 mx-auto max-w-7xl px-4 pb-10 pt-8">
+      {/* --field-h    : rendered height of the field band.
+          --field-sink : how far the heading's bottom sinks BELOW the image's top
+                         edge. The asset is transparent for its first ~40% (260 of
+                         644px) and object-cover scales it by width, so the image
+                         only turns opaque ~16.9vw down from its own top edge
+                         (260/1536 = 0.169). Sinking the heading just past that line
+                         drops the letters' feet into the crop line and the farmers,
+                         while their bodies stay clear against the paper. */}
+      <section
+        className="relative overflow-hidden bg-paper pb-[calc(var(--field-h)_-_var(--field-sink))]"
+        style={
+          {
+            "--field-h": "clamp(190px, 35vw, 620px)",
+            "--field-sink": "calc(16.9vw + 20px)",
+          } as React.CSSProperties
+        }
+      >
+        <div className="relative z-0 mx-auto max-w-7xl px-4 pb-0 pt-8">
           <div className="grid gap-8 sm:grid-cols-3">
             {[
               { h: "Fake exporters", d: "Companies that don't exist, or can't actually export, take your deposit and vanish." },
@@ -92,31 +108,31 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <p className="gsa-heading mt-6 text-center text-3xl font-extrabold text-container sm:text-4xl">
+          <h2 className="gsa-heading mt-8 text-center text-4xl font-extrabold leading-[0.95] tracking-[-0.03em] text-brand sm:text-6xl lg:text-7xl">
             This is why we exist.
-          </p>
+          </h2>
         </div>
 
-        {/* Full-bleed field band welded to the section floor.
+        {/* Full-bleed field band welded to the section floor, painted OVER the
+            heading (z-10 vs the copy's z-0) so the farmers and the crop line occlude
+            the letters — the type reads as standing in the field, not above it.
 
-            field.webp is pre-cropped to the fog band + field only (the source frame
-            was ~55% dead sky), leaving a 3.17:1 asset with the workers near its top.
-            That matters for the anchor: this band is ~5:1, so object-cover always
-            discards a vertical slice. Anchoring to the BOTTOM would keep only the
-            foreground soil and guillotine the workers at the knees, so we anchor to
-            the TOP — the horizon and the workers stay in frame at every width, and
-            the crop eats near-foreground dirt instead, which reads as nothing lost.
+            This only works because the asset keeps its alpha: the source sky is
+            genuinely transparent (rows 0-576 are alpha 0), so bg-paper shows straight
+            through it and the heading behind stays legible, while the opaque farmers
+            and soil cut across the letters' feet. The alpha ramp at the horizon is
+            also what dissolves the photo into #F6F4EF — no CSS mask needed, and
+            flattening this asset onto a solid colour would destroy both effects.
 
-            The mask dissolves the fog edge into bg-paper; without it the photo would
-            butt straight into #F6F4EF as a hard horizontal line. The asset is
-            flattened onto that same #F6F4EF, so the fade has nothing to reveal. */}
+            object-top keeps that transparent headroom and the farmers in frame at
+            every width, cropping the near-foreground soil off the bottom instead. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/scenes/field.webp"
           alt=""
           aria-hidden
           loading="lazy"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-[150px] w-full select-none object-cover object-top sm:h-[200px] lg:h-[300px] [mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,#000_22%)]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[var(--field-h)] w-full select-none object-cover object-top"
         />
       </section>
 
